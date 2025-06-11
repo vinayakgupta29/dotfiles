@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Clear the terminal screen
+clear
+
+
+# Define the default value
+DEFAULT_VALUE="wlan0"
+
+# Check if $1 is provided, otherwise use the default value
+option="${1:-$DEFAULT_VALUE}"
+
+# Fetch the public IPv4 address and store it in a variable
+ipv4=$(ip addr show | grep "$option" | awk '{print $2}' )
+
+# Print the IPv4 address followed by a new line
+echo "Your public IPv4 address on LOCAL WLAN is: $ipv4"
+
+public_ip=$(curl -s https://api.ipify.org/)
+
+echo "Your public IPV4 for everyone else on the internet is : $public_ip"

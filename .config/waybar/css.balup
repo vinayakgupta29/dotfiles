@@ -1,0 +1,250 @@
+/***
+ *    ┓ ┏┏┓┓┏┳┓┏┓┳┓  ┳┳┓┳┳┓┳┳┳┓┏┓┓   ┏┓┏┓┏┓
+ *    ┃┃┃┣┫┗┫┣┫┣┫┣┫━━┃┃┃┃┃┃┃┃┃┃┣┫┃ ━━┃ ┗┓┗┓
+ *    ┗┻┛┛┗┗┛┻┛┛┗┛┗  ┛ ┗┻┛┗┻┛ ┗┛┗┗┛  ┗┛┗┛┗┛
+ *                                         
+ */
+
+
+
+
+/*-----------IMPORTING MATUGEN COLORS----------*/
+@import "matugen/matugen-waybar.css";
+
+
+* {
+    font-size: 12px;
+    font-family: GeistMono Nerd Font Propo;
+    font-weight: bold;
+
+}
+
+window#waybar {
+    all: unset;
+}
+
+
+.modules-left {
+    padding: 7px;
+    margin: 5px 0px 5px 5px;
+    border-radius: 10px;
+    background: alpha(@background, .6);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, .6);
+}
+
+.modules-center {
+    padding: 7px;
+    margin: 5px 0px 5px 0px;
+    border-radius: 10px;
+    background: alpha(@background, .6);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, .6);
+}
+
+.modules-right {
+    padding: 7px;
+    margin: 5px 5px 5px 0px;
+    border-radius: 10px;
+    background: alpha(@background, .6);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, .6);
+}
+
+tooltip {
+    background: alpha(@background, 0.8);
+    border: 2px solid @primary;
+    border-radius: 12px;
+}
+
+tooltip-label {
+    color: @on_surface;
+    padding: 5px;
+}
+
+#custom-playerctl.backward:hover,
+#custom-playerctl.play:hover,
+#custom-playerctl.foward:hover,
+#clock:hover,
+#custom-pacman:hover,
+#custom-notification:hover,
+#bluetooth:hover,
+#network:hover,
+#battery:hover,
+#cpu:hover,
+#memory:hover,
+#temperature:hover {
+    transition: all .3s ease;
+    color: @tertiary;
+}
+
+#custom-notification {
+    padding: 0px 5px;
+    transition: all .3s ease;
+    color: @on_surface;
+}
+
+#clock {
+    padding: 0px 5px;
+    color: @on_surface;
+    transition: all .3s ease;
+}
+
+#custom-pacman {
+    padding: 0px 10px;
+    font-size: 20px;
+    transition: all .3s ease;
+    color: @on_surface;
+
+}
+
+
+/*---------Workspaces-----------------*/
+#workspaces {
+    margin: 2px 2px;
+    padding: 2px 2px;
+    border-radius: 16px;
+    color: @on_surface;
+}
+
+#workspaces button {
+    font-weight: bold;
+    padding: 0px 3px;
+    margin: 0px 3px;
+    border-radius: 16px;
+    color: transparent;
+    background: @surface_container_highest;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button.active {
+    font-weight: bold;
+    background-color: @primary;
+    color: @scrim;
+    border-radius: 16px;
+    min-width: 50px;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button:hover {
+    font-weight: bold;
+    background-color: @tertiary;
+    color: @scrim;
+    border-radius: 16px;
+    min-width: 50px;
+}
+
+#workspaces button.urgent {
+    font-weight: bold;
+    background-color: @error;
+    color: @scrim;
+    border-radius: 16px;
+    min-width: 50px;
+    transition: all 0.3s ease-in-out;
+}
+
+
+#bluetooth {
+    padding: 0px 5px;
+    transition: all .3s ease;
+    color: @on_surface;
+
+}
+
+#network {
+    padding: 0px 5px;
+    transition: all .3s ease;
+    color: @on_surface;
+
+}
+
+#custom-missioncenter {
+    padding: 0px 5px 5px;
+    font-size: 20px;
+    transition: all .3s ease;
+    color: @on_surface;
+}
+
+
+#custom-Menu {
+    font-size: 20px;
+}
+
+#custom-playerctl {
+    font-size: 20px;
+}
+
+#battery {
+    padding: 0px 5px;
+    transition: all .3s ease;
+    color: @on_surface;
+}
+
+#battery.charging {
+    color: @tertiary;
+}
+
+#battery.warning:not(.charging) {
+    color: @error;
+}
+
+#battery.critical:not(.charging) {
+    color: @error_container;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#group-player-toggle,
+#group-expand {
+    padding: 0px 3px;
+    transition: all .3s ease;
+}
+
+#custom-player-expand,
+#custom-expand {
+    padding: 0px 3px;
+    color: @on_surface;
+    transition: all .3s ease;
+}
+
+
+
+#custom-expand:hover {
+    color: rgba(255, 255, 255, .2);
+    text-shadow: 0px 0px 2px rgba(255, 255, 255, .5);
+}
+
+#custom-colorpicker {
+    padding: 0px 5px;
+}
+
+#cpu,
+#memory,
+#temperature {
+    padding: 0px 5px;
+    transition: all .3s ease;
+    color: @on_surface;
+
+}
+
+#custom-endpoint {
+    color: transparent;
+    text-shadow: 0px 0px 1.5px rgba(0, 0, 0, 1);
+
+}
+
+#tray {
+    padding: 0px 5px;
+    transition: all .3s ease;
+
+}
+
+#tray menu * {
+    padding: 0px 5px;
+    transition: all .3s ease;
+}
+
+#tray menu separator {
+    padding: 0px 5px;
+    transition: all .3s ease;
+}

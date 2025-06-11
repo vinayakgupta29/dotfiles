@@ -1,0 +1,253 @@
+/***
+ *    ┓ ┏┏┓┓┏┳┓┏┓┳┓  ┳┳┓┳┳┓┳┳┳┓┏┓┓   ┏┓┏┓┳┓┏┓┳┏┓
+ *    ┃┃┃┣┫┗┫┣┫┣┫┣┫━━┃┃┃┃┃┃┃┃┃┃┣┫┃ ━━┃ ┃┃┃┃┣ ┃┃┓
+ *    ┗┻┛┛┗┗┛┻┛┛┗┛┗  ┛ ┗┻┛┗┻┛ ┗┛┗┗┛  ┗┛┗┛┛┗┻ ┻┗┛
+ *                                              
+ */
+{
+	"layer": "top",
+	"position": "top",
+	"reload_style_on_change": true,
+	"height": 30,
+	"modules-left": [
+		//"custom/notification",
+		"custom/Menu",
+		"custom/pacman",
+		"custom/missioncenter",
+		"group/player-toggle"
+		// "custom/playerctl#backward",
+		// "custom/playerctl#play",
+		// "custom/playerctl#foward",
+		// "custom/playerlabel"
+	],
+	"modules-center": [
+		"hyprland/workspaces"
+	],
+	"modules-right": [
+		"group/expand",
+		// "tray",
+		"bluetooth",
+		"network",
+		"battery",
+		"pulseaudio",
+		"clock"
+	],
+	/*----------Hyprland Workspace----------*/
+	"hyprland/workspaces": {
+		"format": "{id}",
+		"format-icons": {
+			"active": " ",
+			"default": " ",
+			"urgent": " "
+		},
+		"on-click": "activate",
+		"on-scroll-down": "hyprctl dispatch workspace e+1",
+		"on-scroll-up": "hyprctl dispatch workspace e-1"
+	},
+	"custom/pacman": {
+		"format": "󰅢",
+		"tooltip-format": "System Update",
+		"on-click": "kitty --title PacUpdate sh -c 'sleep 0.1; sudo pacman -Syu; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar",
+	},
+	"custom/Menu": {
+		"format": " ",
+		"tooltip": true,
+		"tooltip-format": "Application Menu",
+		"on-click": "killall rofi; rofi -show drun -theme ~/.config/rofi/style.rasi"
+	},
+	"custom/notification": {
+		"tooltip": false,
+		"format": "",
+		"on-click": "swaync-client -t -sw",
+		"escape": true
+	},
+	"clock": {
+		"format": "{:%I:%M %p} ",
+		"interval": 1,
+		"tooltip-format": "<tt>{calendar}</tt>",
+		"calendar": {
+			"format": {
+				"today": "<span color='#fAfBfC'><b>{}</b></span>"
+			}
+		},
+		"actions": {
+			"on-click-right": "shift_down",
+			"on-click": "shift_up"
+		}
+	},
+	"network": {
+		"format-wifi": " ",
+		"format-ethernet": "",
+		"format-disconnected": "",
+		"tooltip-format-disconnected": "Error",
+		"tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+		"tooltip-format-ethernet": "{ifname} 🖧 ",
+		"on-click": "kitty --title KittyNmtui -e sh -c 'sleep 0.1; nmtui'"
+	},
+	// "custom/weather": {
+	// 	"format": "{}",
+	// 	"format-alt": " {alt}",
+	// 	"format-alt-click": "click",
+	// 	"interval": 3600,
+	// 	"return-type": "json",
+	// 	"exec": "$HOME/.config/waybar/scripts/Weather.sh",
+	// 	"exec-if": "ping wttr.in -c1",
+	// 	"tooltip": true
+	// },
+	"bluetooth": {
+		"format-on": "󰂯",
+		"format-off": "BT-off",
+		"format-disabled": "󰂲",
+		"format-connected-battery": "{device_battery_percentage}% 󰂯",
+		"format-alt": "{device_alias} 󰂯",
+		"tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+		"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected": "{device_alias}\n{device_address}",
+		"tooltip-format-enumerate-connected-battery": "{device_alias}\n{device_address}\n{device_battery_percentage}%",
+		"on-click-right": "blueman-manager"
+	},
+	"battery": {
+		"interval": 30,
+		"states": {
+			"good": 95,
+			"warning": 30,
+			"critical": 20
+		},
+		"format": "{icon}   {capacity}% ",
+		"format-charging": "{capacity}% 󰂄",
+		"format-plugged": "{capacity}% 󰂄 ",
+		"format-alt": "{time} {icon}",
+		"format-icons": [
+			"󰁻",
+			"󰁼",
+			"󰁾",
+			"󰂀",
+			"󰂂",
+			"󰁹"
+		]
+	},
+	"custom/missioncenter": {
+		"format": "󰈸 {}",
+		"on-click": "missioncenter",
+		"signal": 8,
+		"tooltip": false
+	},
+	"custom/expand": {
+		"format": "",
+		"tooltip": false
+	},
+	"custom/endpoint": {
+		"format": "|",
+		"tooltip": false
+	},
+	"group/expand": {
+		"orientation": "horizontal",
+		"drawer": {
+			"transition-duration": 600,
+			"transition-to-left": true,
+			"click-to-reveal": true
+		},
+		"modules": [
+			"custom/expand",
+			"custom/colorpicker",
+			"cpu",
+			"memory",
+			"temperature",
+			"custom/endpoint"
+		]
+	},
+	"custom/colorpicker": {
+		"format": "󰏘",
+		"return-type": "json",
+		"interval": "once",
+		"exec": "~/.config/waybar/scripts/Colorpicker.sh -j",
+		"on-click": "~/.config/waybar/scripts/Colorpicker.sh",
+		"signal": 1
+	},
+	"cpu": {
+		"format": "󰻠",
+		"tooltip": true
+	},
+	"memory": {
+		"format": ""
+	},
+	"temperature": {
+		"critical-threshold": 80,
+		"format": ""
+	},
+	"tray": {
+		"icon-size": 14,
+		"spacing": 10
+	},
+	/*---------------Playerctl---------------*/
+	"custom/playerctl#backward": {
+		"format": "󰙣 ",
+		"on-click": "playerctl previous",
+		"on-scroll-down": "wpctl set-volume @DEFAULT_SINK@ 5%-",
+		"on-scroll-up": "wpctl set-volume @DEFAULT_SINK@ 5%+",
+		"tooltip": false
+	},
+	"custom/playerctl#foward": {
+		"format": "󰙡 ",
+		"on-click": "playerctl next",
+		"on-scroll-down": "wpctl set-volume @DEFAULT_SINK@ 5%-",
+		"on-scroll-up": "wpctl set-volume @DEFAULT_SINK@ 5%+",
+		"tooltip": false
+	},
+	"custom/playerctl#play": {
+		"exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+		"format": "{icon}",
+		"format-icons": {
+			"Paused": "<span> </span>",
+			"Playing": "<span>󰏥 </span>",
+			"Stopped": "<span> </span>"
+		},
+		"on-click": "playerctl play-pause",
+		"on-scroll-down": "wpctl set-volume @DEFAULT_SINK@ 5%-",
+		"on-scroll-up": "wpctl set-volume @DEFAULT_SINK@ 5%+",
+		"return-type": "json"
+	},
+	"custom/playerlabel": {
+		"exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\":\"{{status}}\", \"class\": \"{{status}}\"}' -F",
+		"format": "<span>󰎈 {} 󰎈</span>",
+		"max-length": 30,
+		"on-click": "~/.config/waybar/scripts/media_player.sh",
+		"return-type": "json"
+	},
+	"group/player-toggle": {
+		"format": "󰎈",
+		"tooltip": false,
+		"on-click": "pkill -RTMIN+10 waybar",
+		"orientation": "horizontal",
+		"drawer": {
+			"transition-duration": 600,
+			"transition-to-left": true,
+			"click-to-reveal": true
+		},
+		"modules": [
+			"custom/player-expand",
+			"custom/playerctl#backward",
+			"custom/playerctl#play",
+			"custom/playerctl#foward",
+			"custom/playerlabel"
+		]
+	},
+	"custom/player-expand": {
+		"format": "󰎈",
+		"tooltip": false
+	},
+	/*---------------Pulseaudio------------*/
+	"pulseaudio": {
+		"format": "{icon} {volume}%",
+		"format-icons": {
+			"default": [
+				"󰕿",
+				"󰖀",
+				"󰕾"
+			]
+		},
+		"format-muted": "󰝟",
+		"on-click": "pavucontrol",
+		"scroll-step": 5
+	}
+}
