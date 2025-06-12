@@ -1,4 +1,3 @@
-PS1='\W \$ '          # only last directory name
 clear ; fastfetch 
 # Add custom scripts directory to PATH
 alias ls='ls --color=auto'
@@ -25,7 +24,6 @@ force_color_prompt=yes
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
-PS1='\[\e[0;32m\]\u@\h \[\e[0;36m\]\w\[\e[0;33m\]$ \[\e[0m\]'
 
 mountntfs() {
     if [ -z "$1" ]; then
@@ -35,5 +33,5 @@ mountntfs() {
     sudo mount -t ntfs-3g "$1" /mnt/ntfs_partition/
 }
 
-
+PS1=' \[\e[1;32m\]\u\[\e[0m\] @ \[\e[1;32m\]\h \[\e[1;34m\]\w \n \[\e[38;5;178m\]\$\[\e[0m\] '
 
