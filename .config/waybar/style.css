@@ -115,8 +115,8 @@ tooltip-label {
     /* or 10px if still too tall */
     color: transparent;
     background: @surface_container_highest;
-    min-height: 0;
-    min-width: 5px;
+    min-height: 1px;
+    min-width: 2px;
 }
 
 #workspaces button.active,

@@ -1,5 +1,6 @@
 adw-gtk-theme
 ark
+avahi
 blueman
 bluez
 brightnessctl
@@ -10,6 +11,7 @@ docker
 dolphin
 fastfetch
 firefox
+firewalld
 galculator
 ghex
 gimp
@@ -20,6 +22,7 @@ hyprcursor
 hyprland
 hyprpaper
 hyprpolkit
+hyprshot
 iwd
 jdk21-openjdk
 kate
@@ -33,7 +36,6 @@ mako
 missioncenter
 ncdu
 networkmanager
-network-manager-applet
 ntfs-3g
 okular
 pauvcontrol
@@ -46,7 +48,10 @@ sfml
 spectable
 ttf-font-awesome
 ttf-liberation
+ttf-firacode-nerd
 ttf-nerd-fonts-symbols
 vim
 vlc
+wireplumber
 waybar
+xdg-desktop-portal-hyprland 

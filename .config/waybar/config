@@ -62,17 +62,17 @@
 		"escape": true
 	},
 	"clock": {
-		"format": "{:%I:%M %p} ",
+		"format": "󰥔 {:%I:%M:%S %p} ",
 		"interval": 1,
-		"tooltip-format": "<tt>{calendar}</tt>",
+		"tooltip-format": "{:%A, %d/%m/%Y}",
 		"calendar": {
 			"format": {
 				"today": "<span color='#fAfBfC'><b>{}</b></span>"
 			}
 		},
+		"on-click": "gnome-calendar",
 		"actions": {
 			"on-click-right": "shift_down",
-			"on-click": "shift_up"
 		}
 	},
 	"network": {
@@ -114,8 +114,8 @@
 			"critical": 20
 		},
 		"format": "{icon}   {capacity}% ",
-		"format-charging": "{capacity}% 󰂄",
-		"format-plugged": "{capacity}% 󰂄 ",
+		"format-charging": "󰂄 {capacity}% ",
+		"format-plugged": " 󰂄  {capacity}%",
 		"format-alt": "{time} {icon}",
 		"format-icons": [
 			"󰁻",
