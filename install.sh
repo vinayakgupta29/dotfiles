@@ -11,9 +11,47 @@ install_packages() {
     sudo pacman -S --needed --noconfirm $(<packagelist)
 }
 
+set_dolphin_mime() {
+    curl -L https://raw.githubusercontent.com/KDE/plasma-workspace/master/menu/desktop/plasma-applications.menu -o "$HOME/.config/menus/applications.menu"
+    kbuildsycoca6;
+}
+install_sounds() {
+    DEST_DIR="$HOME/.local/sounds"
+    rm -rf "$DEST_DIR"
+    mkdir -p "$DEST_DIR"
+    ln -s $(pwd)/sounds/custom "$DEST_DIR"
+
+    echo "Moved the sounds to $DEST_DIR"
+}
+
 enable_services() {
-    sudo systemctl enable NetworkManager.service
-    sudo systemctl start NetworkManager.service
+    enable_and_start_service NetworkManager
+
+    enable_and_start_service iwd
+
+    enable_and_start_service avahi-daemon
+
+    enable_and_start_service firewalld
+
+    enable_and_start_service bluetooth
+
+    enable_and_start_service polkit
+
+    enable_and_start_service docker
+
+    enable_and_start_service dbus-broker
+
+    enable_and_start_service wireplumber
+
+    enable_and_start_service pipewire
+
+}
+
+enable_and_start_service() {
+    SERVICE=$1
+    sudo systemctl enable "$SERVICE.service"
+    sudo systemctl start "$SERVICE.service"
+    echo "Enabled and Started $SERVICE.service..."
 }
 
 install_AUR_packages() {
@@ -64,6 +102,12 @@ symlink_create() {
     echo "Created all Symlinks... 😄"
 }
 
+install_font() {
+    mkdir $HOME/.local/share/fonts/
+    ln -s $(pwd)/fonts $HOME/.local/share/fonts
+    fc-cache -fv
+
+}
 
 find $(pwd) -type f -name "*.sh" -exec chmod +x {} \; #find . -type f -name "*.sh" -exec chmod +x {} \;
 
@@ -75,10 +119,14 @@ install_AUR_packages
 
 symlink_create
 
+install_font
+
+install_sounds
+
+set_dolphin_mime
+
 chmod +x "$(pwd)/scripts/ipconf"
 chmod +x "$(pwd)/scripts/oye"
-
-
 
 echo "Look into notes to setup sddm and Grub themes..."
 exit 0
