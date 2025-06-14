@@ -62,7 +62,7 @@
 		"escape": true
 	},
 	"clock": {
-		"format": "󰥔 {:%I:%M:%S %p} ",
+		"format": "󰥔  {:%I:%M:%S %p} ",
 		"interval": 1,
 		"tooltip-format": "{:%A, %d/%m/%Y}",
 		"calendar": {

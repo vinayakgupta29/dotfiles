@@ -8,6 +8,8 @@ export PATH="$HOME/bin:$PATH"
 # Add Flutter to PATH
 export PATH="$HOME/flutter/flutter/bin:$PATH"
 
+export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
+
 export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
 
