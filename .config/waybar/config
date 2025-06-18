@@ -5,7 +5,7 @@
  *                                              
  */
 {
-	"layer": "top",
+	"layer": "overlay",
 	"position": "top",
 	"reload_style_on_change": true,
 	"height": 30,
@@ -30,7 +30,8 @@
 		"network",
 		"battery",
 		"pulseaudio",
-		"clock"
+		"clock",
+		"custom/powermenu"
 	],
 	/*----------Hyprland Workspace----------*/
 	"hyprland/workspaces": {
@@ -62,7 +63,7 @@
 		"escape": true
 	},
 	"clock": {
-		"format": "󰥔  {:%I:%M:%S %p} ",
+		"format": "󰥔  {:%I:%M %p} ",
 		"interval": 1,
 		"tooltip-format": "{:%A, %d/%m/%Y}",
 		"calendar": {
@@ -249,5 +250,10 @@
 		"format-muted": "󰝟",
 		"on-click": "pavucontrol",
 		"scroll-step": 5
+	},
+	"custom/powermenu":{
+		"format":" ",
+		"tooltip-format":"Power Menu 🥺",
+		"on-click":"~/.config/waybar/scripts/powermenu.sh",
 	}
 }
