@@ -106,7 +106,7 @@ tooltip-label {
 
 #workspaces button {
     font-weight: bold;
-    padding: 0px 3px;
+    padding: 0px 0px;
     /* only side padding */
     margin: 0px 2px;
     /* reduce side spacing */
@@ -140,7 +140,7 @@ tooltip-label {
     color: @on_surface;
 
 }
-
+#custom-powermenu,
 #network {
     padding: 0px 5px;
     transition: all .3s ease;

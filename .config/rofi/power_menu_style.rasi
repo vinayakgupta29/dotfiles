@@ -1,0 +1,65 @@
+
+* {
+  background-color:                 transparent;
+  background:                       #282A36;
+  background-transparent:           #282A36D0;
+  text-color:                       #D8DEE9;
+  primary:                            white/15%;
+  secondary:                        white/5%;
+  urgent:                           #BF616A;
+  prompt-font:                        "Diphylleia";
+}
+
+configuration {
+  font:                             "monospace 30";
+}
+
+window {
+  width:                            100%;
+  height:                           100%;
+  background-color:                 @background-transparent;
+  transparency:                     "real";
+  children:                         [dummy, inputbar, listview, dummy];
+}
+
+listview {
+  lines:                            5;
+  layout:                           horizontal;
+  children:                         [element];
+  margin:                           84px 0px 0px 397px;
+}
+
+element {
+  children:                         [element-text];
+  padding:                          15px 40px;
+  border-color:                     @primary;
+  border-radius:                    20px;
+}
+
+element-text {
+  text-color:                       @text-color;
+  font:                             "Diphylleia 30";
+  margin:                           15px 0 0 0;
+}
+
+element.selected {
+  text-color:                       @background;
+  background-color:                 @primary;
+}
+
+inputbar {
+    enabled:                     true;
+    background-color:            transparent;
+    children:                    [ "dummy", "prompt", "dummy"];
+}
+
+dummy {
+    background-color:            transparent;
+}
+
+prompt {
+    enabled:                     true;
+    font:                        "Diphylleia 30";
+    background-color:            transparent;
+    text-color:                  var(foreground-normal);
+}
