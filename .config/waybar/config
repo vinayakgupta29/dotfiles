@@ -5,7 +5,7 @@
  *                                              
  */
 {
-	"layer": "overlay",
+	"layer": "top",
 	"position": "top",
 	"reload_style_on_change": true,
 	"height": 30,
@@ -25,9 +25,9 @@
 	],
 	"modules-right": [
 		"group/expand",
-		// "tray",
+		"tray",
 		"bluetooth",
-		"network",
+		// "network",
 		"battery",
 		"pulseaudio",
 		"clock",
@@ -128,7 +128,7 @@
 		]
 	},
 	"custom/missioncenter": {
-		"format": "󰈸 {}",
+		"format": "󰈸",
 		"on-click": "missioncenter",
 		"signal": 8,
 		"tooltip": false
@@ -154,6 +154,8 @@
 			"cpu",
 			"memory",
 			"temperature",
+			"custom/vpn",
+			"network#speed",
 			"custom/endpoint"
 		]
 	},
@@ -216,7 +218,6 @@
 		"return-type": "json"
 	},
 	"group/player-toggle": {
-		"format": "󰎈",
 		"tooltip": false,
 		"on-click": "pkill -RTMIN+10 waybar",
 		"orientation": "horizontal",
@@ -234,7 +235,7 @@
 		]
 	},
 	"custom/player-expand": {
-		"format": "󰎈",
+		"format": "<span>󰎈 </span>",
 		"tooltip": false
 	},
 	/*---------------Pulseaudio------------*/
@@ -251,9 +252,28 @@
 		"on-click": "pavucontrol",
 		"scroll-step": 5
 	},
-	"custom/powermenu":{
-		"format":" ",
-		"tooltip-format":"Power Menu 🥺",
-		"on-click":"~/.config/waybar/scripts/powermenu.sh",
+	"custom/powermenu": {
+		"format": " ",
+		"tooltip-format": "Power Menu 🥺",
+		"on-click": "~/.config/waybar/scripts/powermenu.sh",
+	},
+	"custom/vpn": {
+		"format": "<span>󱚿 </span>",
+		"on-click": "protonvpn-app",
+		"tooltip-format": "ProtonVPN"
+	},
+	"network#speed": {
+		"interval": 1,
+		"format": "{ifname}",
+		"format-wifi": "{icon}  {bandwidthDownBytes}   {bandwidthUpBytes} ",
+		"format-ethernet": "{icon} {bandwidthDownBytes}   {bandwidthUpBytes} ",
+		"format-disconnected": "󰌙",
+		"tooltip-format": "{ipaddr}",
+		"format-linked": "󰈁 {ifname} (No IP)",
+		"tooltip-format-wifi": "{essid} {icon} {signalStrength}%",
+		"tooltip-format-ethernet": "{ifname} 󰌘",
+		"tooltip-format-disconnected": "󰌙 Disconnected",
+		"max-length": 30
+		
 	}
 }

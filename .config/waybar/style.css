@@ -87,6 +87,7 @@ tooltip-label {
     transition: all .3s ease;
 }
 
+#custom-missioncenter,
 #custom-pacman {
     padding: 0px 10px;
     font-size: 20px;
@@ -133,13 +134,6 @@ tooltip-label {
 }
 
 
-
-#bluetooth {
-    padding: 0px 5px;
-    transition: all .3s ease;
-    color: @on_surface;
-
-}
 #custom-powermenu,
 #network {
     padding: 0px 5px;
@@ -148,12 +142,6 @@ tooltip-label {
 
 }
 
-#custom-missioncenter {
-    padding: 0px 5px 5px;
-    font-size: 20px;
-    transition: all .3s ease;
-    color: @on_surface;
-}
 
 
 #custom-Menu {
@@ -164,6 +152,8 @@ tooltip-label {
     font-size: 20px;
 }
 
+#bluetooth,
+#pulseaudio ,
 #battery {
     padding: 0px 5px;
     transition: all .3s ease;
@@ -187,15 +177,16 @@ tooltip-label {
     animation-direction: alternate;
 }
 
-#group-player-toggle,
+/* #group-player-toggle,
 #group-expand {
-    padding: 0px 3px;
+    padding: 10px 3px;
     transition: all .3s ease;
-}
+} */
 
 #custom-player-expand,
 #custom-expand {
     padding: 0px 3px;
+    font-size: 15px;
     color: @on_surface;
     transition: all .3s ease;
 }
