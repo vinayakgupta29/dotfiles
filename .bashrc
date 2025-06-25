@@ -1,7 +1,7 @@
 clear ; fastfetch 
 # Add custom scripts directory to PATH
 alias ls='ls --color=auto'
-
+alias gitcm = "git commit -m"
 export PATH="$HOME/scripts:$PATH"
 
 export PATH="$HOME/bin:$PATH"
@@ -35,5 +35,7 @@ mountntfs() {
     sudo mount -t ntfs-3g "$1" /mnt/ntfs_partition/
 }
 
-PS1=' \[\e[1;32m\]\u\[\e[0m\] @ \[\e[1;32m\]\h \[\e[1;34m\]\w \n \[\e[38;5;178m\]\$\[\e[0m\] '
+PS1='
+\[\e[1;32m\]╭─ \u @ \h \[\e[1;34m\]\w\[\e[0m\]
+\[\e[1;32m\]╰─ \[\e[38;5;178m\]λ \[\e[0m\]'
 
