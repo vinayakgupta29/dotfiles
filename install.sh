@@ -95,10 +95,16 @@ symlink_create() {
     fi
 
     if pacman -Q kitty &>dev/null; then
-        ln $(pwd)/.config/kity $HOME/.config/kitty
+        ln -s $(pwd)/.config/kity $HOME/.config/kitty
     else
         echo "Kitty is not installed"
     fi
+    if pacman -Q fastfetch &>dev/null; then
+        ln -s $(pwd)/.config/fastfetch $HOME/.config/fastfetch
+    else
+        echo "Fastfetch is not installed"
+    fi
+
     echo "Created all Symlinks... 😄"
 }
 
