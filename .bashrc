@@ -1,7 +1,9 @@
 clear ; fastfetch 
 # Add custom scripts directory to PATH
 alias ls='ls --color=auto'
-alias gitcm = "git commit -m"
+alias gitcm="git commit -m"
+alias gitpo="git push origin"
+alias gitpl="git pull origin"
 export PATH="$HOME/scripts:$PATH"
 
 export PATH="$HOME/bin:$PATH"
