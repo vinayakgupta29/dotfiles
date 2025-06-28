@@ -13,7 +13,20 @@ fi
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export PATH="$HOME/bin:$PATH"
+# Add Flutter to PATH
+export PATH="$HOME/flutter/flutter/bin:$PATH"
 
+export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
+
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
+export PATH=$JAVA_HOME/bin:$PATH
+
+export XCURSOR_THEME="Anya cursor"
+export XCURSOR_SIZE=24
+
+# Define path to Google Chrome executable
+export CHROME_EXECUTABLE="/opt/google/chrome/chrome"
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
