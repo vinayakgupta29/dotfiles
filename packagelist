@@ -56,3 +56,6 @@ vlc
 wireplumber
 waybar
 xdg-desktop-portal-hyprland 
+zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
