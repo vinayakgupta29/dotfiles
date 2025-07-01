@@ -1,3 +1,9 @@
+# Start Hyprland if not running and if this is a TTY login shell
+if [[ -z "$WAYLAND_DISPLAY" ]] && [[ "$(tty)" == "/dev/tty1" ]] && ! pgrep -x Hyprland > /dev/null; then
+  exec Hyprland
+fi
+
+
 clear ; fastfetch 
 # Add custom scripts directory to PATH
 alias ls='ls --color=auto'
