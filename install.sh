@@ -23,6 +23,20 @@ install_sounds() {
 
     echo "Moved the sounds to $DEST_DIR"
 }
+setup_xterm(){
+  ln -s $(pwd)/.Xresources ~/.Xresources
+  xrdb -merge ~/.Xresources
+}
+
+setup_shell(){
+
+  ln -s $(pwd)/.bashrc ~/.bashrc
+  ln -s $(pwd)/.zshrc  ~/.zshrc
+  ln -s $(pwd)/.p10k.zsh ~/.p10k.zsh
+  ln -s $(pwd)/.gvimrc   ~/.gvimrc
+  ln -s $(pwd)/.gtkrc-2.0  ~/.gtkrc-2.0
+
+}
 
 enable_services() {
     enable_and_start_service NetworkManager
@@ -130,6 +144,10 @@ install_font
 install_sounds
 
 set_dolphin_mime
+
+setup_xterm
+
+setup_shell
 
 chmod +x "$(pwd)/scripts/ipconf"
 chmod +x "$(pwd)/scripts/oye"

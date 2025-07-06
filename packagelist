@@ -16,6 +16,7 @@ galculator
 ghex
 gimp
 grub
+gvim
 gwenview
 htop
 hyprcursor
@@ -51,7 +52,6 @@ ttf-font-awesome
 ttf-liberation
 ttf-firacode-nerd
 ttf-nerd-fonts-symbols
-vim
 vlc
 wireplumber
 waybar

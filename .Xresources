@@ -1,0 +1,23 @@
+! XTerm Dark Theme
+XTerm*background: black
+XTerm*foreground: white
+XTerm*faceName: Monospace
+XTerm*faceSize: 10
+
+! Optional: URL highlighting
+XTerm*highlightColor: blue
+
+! Disable scrollbar
+XTerm*scrollBar: false
+
+! Cursor settings
+XTerm*cursorColor: green
+XTerm*cursorBlink: true
+XTerm*underlineCursor: true
+
+! Optional: Customize mouse pointer in xterm
+XTerm*pointerShape: xterm
+
+XTerm*selectToClipboard: true
+Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
+Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
