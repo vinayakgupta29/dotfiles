@@ -1,5 +1,6 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "type": "auto",
   "logo": {
     "source": "~/.config/fastfetch/92843192_p0_master1200.jpg",
     "height": 26,
