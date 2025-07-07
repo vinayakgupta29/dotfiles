@@ -6,42 +6,56 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
   },
-  opts = {
-   git_status = {
-      symbols = {
-    added      = "",
-    modified   = "",
-    deleted    = "",
-    renamed    = "",
-    untracked  = "",
-    ignored    = "",
-    conflicted = "",
-  },
-    },
-    filesystem = {
-      filtered_items = {
-        visible = true,
-        hide_dotfiles = false,
-        hide_gitignored = false,
+  config = function()
+    require("neo-tree").setup({
+      enable_git_status = true, -- ✅ Make sure git integration is enabled
+      
+      git_status = {
+        symbols = {
+          added      = "✓",   -- staged
+          modified   = "",   -- unstaged
+          deleted    = "",
+          renamed    = "➜",
+          untracked  = "★",
+          ignored    = "◌",
+          conflicted = "",
+        },
       },
-    },
-  },
-  config = function(_, opts)
-    require("neo-tree").setup(opts)
+      filesystem = {
+        filtered_items = {
+          visible = true,
+          hide_dotfiles = false,
+          hide_gitignored = false,
+        },
+        renderers = {
+          directory = {
+            { "icon", default = "", highlight = "NeoTreeDirectoryIcon" },
+            { "name", highlight = "NeoTreeDirectoryName" },
+            { "git_status", highlight = "NeoTreeGitStatus" },
+          },
+          file = {
+            { "icon", default = "", highlight = "NeoTreeFileIcon" },
+            { "name", highlight = "NeoTreeFileName" },
+            { "git_status", highlight = "NeoTreeGitStatus" },
+          },
+        },
+      },
+    })
 
-    -- ✅ Git highlights
+    -- ✅ Set git + folder highlights
     local highlights = {
-      NeoTreeGitStaged    = "#81b88b",
-      NeoTreeGitUnstaged  = "#e2c08d",
-      NeoTreeGitUntracked = "#73c991",
-      NeoTreeGitIgnored   = "#8c8c8c",
-      NeoTreeGitRenamed   = "#73c991",
-      NeoTreeGitDeleted   = "#f97583",
-      NeoTreeGitConflict  = "#e4676b",
+      NeoTreeGitStaged     = { fg = "#81b88b" },
+      NeoTreeGitUnstaged   = { fg = "#e2c08d" },
+      NeoTreeGitUntracked  = { fg = "#73c991" },
+      NeoTreeGitIgnored    = { fg = "#8c8c8c" },
+      NeoTreeGitRenamed    = { fg = "#73c991" },
+      NeoTreeGitDeleted    = { fg = "#f97583" },
+      NeoTreeGitConflict   = { fg = "#e4676b" },
+      NeoTreeDirectoryName = { fg = "#dadada" },
     }
 
-    for group, color in pairs(highlights) do
-      vim.api.nvim_set_hl(0, group, { fg = color })
+    for group, hl in pairs(highlights) do
+      vim.api.nvim_set_hl(0, group, hl)
     end
   end,
 }
