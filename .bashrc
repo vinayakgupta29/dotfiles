@@ -5,7 +5,7 @@
 if [[ $- == *i* ]]; then
     case $TERM in
         xterm-kitty)
-        clear; fastfetch
+       # clear; fastfetch
         ;;
         linux)
        # clear; fastfetch --logo-type builtin

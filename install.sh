@@ -118,6 +118,9 @@ symlink_create() {
     else
         echo "Fastfetch is not installed"
     fi
+    if pacman -Q nvim &>dev/null; then
+	    ln -s $(pwd)/.config/nvim $HOME/.config/nvim
+    fi
 
     echo "Created all Symlinks... 😄"
 }
