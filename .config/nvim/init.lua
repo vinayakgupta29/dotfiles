@@ -10,6 +10,8 @@ vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 
+vim.o.mouse = "a"
+
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', 'dd', '"_dd', opts)
 vim.api.nvim_set_keymap('n', 'dw', '"_dw', opts)
@@ -33,8 +35,20 @@ require("config.lazy")
 
 vim.keymap.set("n", "<A-e>", "<cmd>Neotree toggle<CR>", { noremap = true, silent = true })
 
-local floating_shell = require("config.floating_shell")
-vim.keymap.set("n", "<A-t>", floating_shell.toggle_floating_shell, { noremap = true, silent = true })
+
+vim.keymap.set("n", "<A-t>", function()
+  vim.o.splitright = true
+  local buf_path = vim.api.nvim_buf_get_name(0)
+  local dir = vim.fn.fnamemodify(buf_path, ":p:h") -- get directory of current file
+  if dir == "" then
+    dir = vim.fn.getcwd() -- fallback to CWD if buffer has no file
+  end
+  vim.cmd("vsplit")                            -- open vertical split
+  vim.cmd("terminal fish")                     -- open fish shell in terminal
+  vim.cmd("lcd " .. dir)                       -- set local dir for that window
+end, { noremap = true, silent = true, desc = "Open Fish shell in current dir" })
+
+
 
 local trash = require('config.trash')
 vim.keymap.set("n", "<leader>dt", trash.trash_file, {noremap = true, silent = true})
@@ -67,14 +81,23 @@ local bufferline = require("bufferline")
 
 vim.keymap.set("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>")
 vim.keymap.set("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>")
-vim.keymap.set("n", "<C-w>", ":bd<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap(
-  "n",
-  "<C-LeftMouse>",
-  "<cmd>Telescope lsp_definitions<CR>",
-  { noremap = true, silent = true }
-)
 
+vim.keymap.set("n", "<Q>", function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  if vim.bo[bufnr].modified then
+    local choice = vim.fn.input("Buffer has unsaved changes. Save? (y/n/c): ")
 
+    if choice == "y" then
+      vim.cmd("write")        -- Save and continue to close
+    elseif choice == "n" then
+      vim.bo[bufnr].modified = false -- Mark as not modified to force close
+    else
+      print("Canceled")
+      return
+    end
+  end
 
+  -- Close the buffer
+  vim.cmd("bdelete")
+end, { noremap = true, silent = true, desc = "Close buffer with prompt if unsaved" })
 
