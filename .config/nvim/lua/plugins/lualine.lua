@@ -32,6 +32,7 @@ return {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" }, -- for file icons
     config = function()
+      vim.o.laststatus = 3
       require('lualine').setup {
         options = {
           theme = dark_theme,  -- <-- set the theme here
@@ -44,7 +45,7 @@ return {
           lualine_b = {'branch', 'diff', 'diagnostics'},
           lualine_c = {'filename'},
           lualine_x = {'encoding', 'fileformat', 'filetype'},
-          lualine_y = {'progress'},
+         lualine_y = {},
           lualine_z = {'location'}
         },
       }

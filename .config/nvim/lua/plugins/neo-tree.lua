@@ -59,6 +59,7 @@ local opts = {
       },
   },
   window = {
+    width = 25,
     mappings = {
             ["<2-LeftMouse>"] = "open",
             ["<cr>"] = "open",
