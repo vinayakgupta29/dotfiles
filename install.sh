@@ -31,8 +31,6 @@ setup_xterm(){
 setup_shell(){
 
   ln -s $(pwd)/.bashrc ~/.bashrc
-  ln -s $(pwd)/.zshrc  ~/.zshrc
-  ln -s $(pwd)/.p10k.zsh ~/.p10k.zsh
   ln -s $(pwd)/.gvimrc   ~/.gvimrc
   ln -s $(pwd)/.gtkrc-2.0  ~/.gtkrc-2.0
 
