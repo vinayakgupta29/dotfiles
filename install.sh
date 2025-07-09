@@ -8,11 +8,11 @@ install_yay() {
 }
 
 install_packages() {
-    sudo pacman -S --needed --noconfirm $(<packagelist)
+    sudo pacman -S  $(<packagelist)
 }
 
 set_dolphin_mime() {
-    curl -L https://raw.githubusercontent.com/KDE/plasma-workspace/master/menu/desktop/plasma-applications.menu -o "$HOME/.config/menus/applications.menu"
+    curl --create-dirs -L https://raw.githubusercontent.com/KDE/plasma-workspace/master/menu/desktop/plasma-applications.menu -o "$HOME/.config/menus/applications.menu"
     kbuildsycoca6;
 }
 install_sounds() {
@@ -29,7 +29,7 @@ setup_xterm(){
 }
 
 setup_shell(){
-
+  ln -s $(pwd)/.bash_profile ~/.bash_profile
   ln -s $(pwd)/.bashrc ~/.bashrc
   ln -s $(pwd)/.gvimrc   ~/.gvimrc
   ln -s $(pwd)/.gtkrc-2.0  ~/.gtkrc-2.0
@@ -51,12 +51,13 @@ enable_services() {
 
     enable_and_start_service docker
 
-    enable_and_start_service dbus-broker
+    if [ -n "${SUDO_USER:-}" ]&& [ "$SUDO_USER" != "root"]; then
+	    runuser -l "$SUDO_USER" -C \
+		    "
+    systemctl --user daemon-reload 
 
-    enable_and_start_service wireplumber
-
-    enable_and_start_service pipewire
-
+    systemctl --global enable --now pipewire.socket wirepulmber.service"
+    fi
 }
 
 enable_and_start_service() {
@@ -69,54 +70,54 @@ enable_and_start_service() {
 install_AUR_packages() {
     install_yay
 
-    yay -S --needed $(<AUR_PACKAGES)
+    yay -S  $(<aur_pkg_list)
 }
 symlink_create() {
-    if pacman -Q hyprland &>/dev/null; then
+	mkdir -p "$HOME/.config";
+    if pacman -Qq hyprland &>/dev/null; then
         ln -s $(pwd)/.config/hypr $HOME/.config/hypr
         chmod +x $HOME/.config/hypr/*.sh
     else
         echo "hyprland is not installed"
     fi
 
-    if pacman -Q waybar &>dev/null; then
-        ln -s $(pwd)/.config/waybar $HOME/.cofig/waybar
-        chmod +x $(pwd)/.config/waybar/*.sh
+    if pacman -Qq waybar &>/dev/null; then
+        ln -s $(pwd)/.config/waybar $HOME/.config/waybar
+        chmod +x $(pwd)/.config/waybar/**/*.sh
     else
         echo "waybar is not installed"
     fi
 
-    if pacman -Q range &>dev/null; then
+    if pacman -Qq ranger &>/dev/null; then
         ln -s $(pwd)/.config/ranger $HOME/.config/ranger
-        chmod +x $(pwd)/.config/ranger/*.sh
+	find "$(pwd)/.config/ranger" -type f -name "*.sh" -exec chmod +x {} + 2>/dev/null
     else
         echo "Ranger is not installed"
     fi
 
-    if pacman -Q rofi &>dev/null; then
+    if pacman -Qq rofi &>/dev/null; then
         ln -s $(pwd)/.config/rofi $HOME/.config/rofi
-        chmod +x $(pwd)/.config/rofi/*.sh
     else
         echo "Rofi is not installed"
     fi
 
-    if pacman -Q mako &>dev/null; then
+    if pacman -Qq mako &>/dev/null; then
         ln -s $(pwd)/.config/mako $HOME/.config/mako
     else
         echo "Mako is not installed..."
     fi
 
-    if pacman -Q kitty &>dev/null; then
-        ln -s $(pwd)/.config/kity $HOME/.config/kitty
+    if pacman -Qq kitty &>/dev/null; then
+        ln -s $(pwd)/.config/kitty $HOME/.config/kitty
     else
         echo "Kitty is not installed"
     fi
-    if pacman -Q fastfetch &>dev/null; then
+    if pacman -Qq fastfetch &>/dev/null; then
         ln -s $(pwd)/.config/fastfetch $HOME/.config/fastfetch
     else
         echo "Fastfetch is not installed"
     fi
-    if pacman -Q nvim &>dev/null; then
+    if pacman -Qq nvim &>/dev/null; then
 	    ln -s $(pwd)/.config/nvim $HOME/.config/nvim
     fi
 
@@ -132,21 +133,21 @@ install_font() {
 
 find $(pwd) -type f -name "*.sh" -exec chmod +x {} \; #find . -type f -name "*.sh" -exec chmod +x {} \;
 
-install_packages
+#install_packages
 
-enable_services
+#enable_services
 
-install_AUR_packages
+#install_AUR_packages
 
 symlink_create
 
-install_font
+#install_font
 
-install_sounds
+#install_sounds
 
 set_dolphin_mime
 
-setup_xterm
+#setup_xterm
 
 setup_shell
 

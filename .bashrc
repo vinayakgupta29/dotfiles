@@ -49,6 +49,9 @@ export PATH=$JAVA_HOME/bin:$PATH
 export XCURSOR_THEME="Anya cursor"
 export XCURSOR_SIZE=24
 
+export QT_QPA_PLATFORMTHEME=qt5ct
+export QT6CT_PLATFORMTHEME=qt6ct
+
 # Define path to Google Chrome executable
 export CHROME_EXECUTABLE="/opt/google/chrome/chrome"
 
