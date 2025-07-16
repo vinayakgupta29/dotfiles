@@ -25,7 +25,7 @@ local opts = {
     renderer = {
       highlight_git = true,
       highlight_opened_files = "name", -- highlight opened files by name
-      highlight_modified = "icon", -- highlight modified files by icon
+      highlight_modified = "icon",     -- highlight modified files by icon
       indent_markers = {
         enable = true,
       },
@@ -53,42 +53,42 @@ local opts = {
     follow_current_file = { enabled = true },
     use_libuv_file_watcher = true,
     filtered_items = {
-        visible = true,
-        hide_dotfiles = false,
-        hide_gitignored = false,
-      },
+      visible = true,
+      hide_dotfiles = false,
+      hide_gitignored = false,
+    },
   },
   window = {
-    width = 25,
+    width = 30,
     mappings = {
-            ["<2-LeftMouse>"] = "open",
-            ["<cr>"] = "open",
-            ["o"] = "open",
-            ["S"] = "open_split",
-            ["s"] = "open_vsplit",
-            ["C"] = "close_node",
-            ["."] = "set_root",
-            ["H"] = "toggle_hidden",
-            ["R"] = "refresh",
-            ["/"] = "fuzzy_finder",
-            ["f"] = "filter_on_submit",
-            ["<c-x>"] = "clear_filter",
-            ["a"] = "add",
-            ["d"] = "delete",
-            ["r"] = "rename",
-            ["y"] = "copy_to_clipboard",
-            ["x"] = "cut_to_clipboard",
-            ["p"] = "paste_from_clipboard",
-            ["c"] = "copy",
-            ["m"] = "move",
-            ["q"] = "close_window",
-            ["P"] = function(state)
-              local node = state.tree:get_node()
-              local relpath = vim.fn.fnamemodify(node.path, ":.")
-              vim.fn.setreg("+", relpath)
-              vim.notify("Copied relative path: " .. relpath)
-            end,
-          },
+      ["<2-LeftMouse>"] = "open",
+      ["<cr>"] = "open",
+      ["o"] = "open",
+      ["S"] = "open_split",
+      ["s"] = "open_vsplit",
+      ["C"] = "close_node",
+      ["."] = "set_root",
+      ["H"] = "toggle_hidden",
+      ["R"] = "refresh",
+      ["/"] = "fuzzy_finder",
+      ["f"] = "filter_on_submit",
+      ["<c-x>"] = "clear_filter",
+      ["a"] = "add",
+      ["d"] = "delete",
+      ["r"] = "rename",
+      ["y"] = "copy_to_clipboard",
+      ["x"] = "cut_to_clipboard",
+      ["p"] = "paste_from_clipboard",
+      ["c"] = "copy",
+      ["m"] = "move",
+      ["q"] = "close_window",
+      ["P"] = function(state)
+        local node = state.tree:get_node()
+        local relpath = vim.fn.fnamemodify(node.path, ":.")
+        vim.fn.setreg("+", relpath)
+        vim.notify("Copied relative path: " .. relpath)
+      end,
+    },
   },
   default_component_configs = {
     indent = {
@@ -99,59 +99,59 @@ local opts = {
     },
     git_status = {
       symbols = {
-        unstaged  = "U",  
+        unstaged  = "U",
         staged    = "✓",
         unmerged  = "",
         renamed   = "➜",
         untracked = "★",
         deleted   = "",
         ignored   = "",
-     },
+      },
     },
   },
 }
 
 return {
-    "nvim-neo-tree/neo-tree.nvim",
-    dependencies = {
-        "MunifTanjim/nui.nvim", 
-        "nvim-lua/plenary.nvim", 
-        "nvim-tree/nvim-web-devicons"
-    },
-    opts = opts,
-    config = function()
-        require("neo-tree").setup(opts)
+  "nvim-neo-tree/neo-tree.nvim",
+  dependencies = {
+    "MunifTanjim/nui.nvim",
+    "nvim-lua/plenary.nvim",
+    "nvim-tree/nvim-web-devicons"
+  },
+  opts = opts,
+  config = function()
+    require("neo-tree").setup(opts)
 
-        -- ✅ Set git + folder highlights
-        local highlights = {
-            NeoTreeGitStaged = {
-                fg = "#81b88b"
-            },
-            NeoTreeGitUnstaged = {
-                fg = "#e2c08d"
-            },
-            NeoTreeGitUntracked = {
-                fg = "#73c991"
-            },
-            NeoTreeGitIgnored = {
-                fg = "#8c8c8c"
-            },
-            NeoTreeGitRenamed = {
-                fg = "#73c991"
-            },
-            NeoTreeGitDeleted = {
-                fg = "#f97583"
-            },
-            NeoTreeGitConflict = {
-                fg = "#e4676b"
-            },
-            NeoTreeDirectoryName = {
-                fg = "#dadada"
-            }
-        }
+    -- ✅ Set git + folder highlights
+    local highlights = {
+      NeoTreeGitStaged = {
+        fg = "#81b88b"
+      },
+      NeoTreeGitUnstaged = {
+        fg = "#e2c08d"
+      },
+      NeoTreeGitUntracked = {
+        fg = "#73c991"
+      },
+      NeoTreeGitIgnored = {
+        fg = "#8c8c8c"
+      },
+      NeoTreeGitRenamed = {
+        fg = "#73c991"
+      },
+      NeoTreeGitDeleted = {
+        fg = "#f97583"
+      },
+      NeoTreeGitConflict = {
+        fg = "#e4676b"
+      },
+      NeoTreeDirectoryName = {
+        fg = "#dadada"
+      }
+    }
 
-        for group, hl in pairs(highlights) do
-            vim.api.nvim_set_hl(0, group, hl)
-        end
+    for group, hl in pairs(highlights) do
+      vim.api.nvim_set_hl(0, group, hl)
     end
+  end
 }

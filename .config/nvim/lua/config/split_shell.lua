@@ -1,51 +1,52 @@
 local M = {}
 
-local term_bufnr = nil
-local term_winid = nil
+local float_bufnr = nil
 
-function M.toggle_split_shell()
-  -- If terminal is already open, close it
-  if term_winid and vim.api.nvim_win_is_valid(term_winid) then
-    vim.api.nvim_win_close(term_winid, true)
-    term_winid = nil
-    term_bufnr = nil
+local float_winid = nil
+
+function M.toggle_floating_shell()
+  if float_winid and vim.api.nvim_win_is_valid(float_winid) then
+    -- If floating window exists and is open, close it
+
+    vim.api.nvim_win_close(float_winid, true)
+
+    float_winid = nil
+
+    float_bufnr = nil
   else
-    -- Create new terminal buffer
-    term_bufnr = vim.api.nvim_create_buf(false, true)
+    -- Otherwise create it
+    float_bufnr = vim.api.nvim_create_buf(false, true)
 
-    local total_lines = vim.o.lines
-    local height = math.floor(total_lines * 0.45)
+    local width = math.floor(vim.o.columns * 0.8)
 
-    -- Save current window to return focus later
-    local cur_win = vim.api.nvim_get_current_win()
+    local height = math.floor(vim.o.lines * 0.3)
 
-    -- Open horizontal split with height
-    vim.cmd(height .. "split")
-    term_winid = vim.api.nvim_get_current_win()
+    local row = math.floor((vim.o.lines - height) - 4)
 
-    -- Set buffer to terminal buffer
-    vim.api.nvim_win_set_buf(term_winid, term_bufnr)
+    local col = math.floor((vim.o.columns - width))
 
-    -- Optional: minimal style
-    vim.wo[term_winid].number = false
-    vim.wo[term_winid].relativenumber = false
+    local opts = {
+      style = "minimal",
+      relative = "editor",
+      width = width,
+      height = height,
+      row = row,
+      col = col,
+      border = "rounded",
+    }
 
-    -- Hide the default statusline in this terminal buffer
-vim.api.nvim_win_set_option(term_winid, "statusline", "")
-
-    -- Start terminal
+    float_winid = vim.api.nvim_open_win(float_bufnr, true, opts)
+    -- Start terminal with user's default shell
     vim.fn.termopen("fish")
 
-    -- Enter insert mode
+    -- Enter insert mode immediately
+
     vim.cmd("startinsert")
 
-    -- <Esc> to close terminal window
-    vim.api.nvim_buf_set_keymap(term_bufnr, "t", "<Esc>", "<C-\\><C-n>:bd!<CR>", { noremap = true, silent = true })
+    -- Map <Esc> to close floating terminal as well
 
-    -- Restore previous window focus
-    vim.api.nvim_set_current_win(cur_win)
+    vim.api.nvim_buf_set_keymap(float_bufnr, "t", "<Esc>", "<C-\\><C-n>:bd!<CR>", { noremap = true, silent = true })
   end
 end
 
 return M
-

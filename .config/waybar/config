@@ -63,7 +63,7 @@
 		"escape": true
 	},
 	"clock": {
-		"format": "󰥔  {:%I:%M %p} ",
+		"format": "󰥔 {:%I:%M %p} ",
 		"interval": 1,
 		"tooltip-format": "{:%A, %d/%m/%Y}",
 		"calendar": {
@@ -114,7 +114,7 @@
 			"warning": 30,
 			"critical": 20
 		},
-		"format": "{icon}   {capacity}% ",
+		"format": "{icon} {capacity}% ",
 		"format-charging": "󰂄 {capacity}% ",
 		"format-plugged": " 󰂄  {capacity}%",
 		"format-alt": "{time} {icon}",

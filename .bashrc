@@ -2,23 +2,6 @@
 #if [[ -z "$WAYLAND_DISPLAY" ]] && [[ "$(tty)" == "/dev/tty1" ]] && ! pgrep -x Hyprland > /dev/null; then
  # Hyprland
 #fi
-if [[ $- == *i* ]]; then
-    case $TERM in
-        xterm-kitty)
-       # clear; fastfetch
-        ;;
-        linux)
-       # clear; fastfetch --logo-type builtin
-        ;;
-        *)
-        :
-        ;;
-    esac
-
-fi
-
-
-
 
 # Add custom scripts directory to PATH
 alias ls='ls --color=auto'
@@ -35,7 +18,7 @@ alias gitpl="git pull origin"
 alias docker="sudo docker"
 alias docker-compose="sudo docker-compose"
 
-export PATH="$HOME/scripts:$PATH"
+export PATH="$HOME/bin/scripts:$PATH"
 
 export PATH="$HOME/bin:$PATH"
 # Add Flutter to PATH
@@ -46,7 +29,7 @@ export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
 export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
 
-export XCURSOR_THEME="Anya cursor"
+export XCURSOR_THEME="Anya_cursor"
 export XCURSOR_SIZE=24
 
 export QT_QPA_PLATFORMTHEME=qt5ct
@@ -75,3 +58,18 @@ PS1='
 \[\e[1;32m\] \u @ \h \[\e[1;34m\]\w\[\e[0m\]
 \[\e[1;32m\] \[\e[38;5;178m\]__> \[\e[0m\]'
 
+
+
+# fnm
+FNM_PATH="/home/zoro/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "`fnm env`"
+fi
+
+# fnm
+FNM_PATH="/home/zoro/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "`fnm env`"
+fi

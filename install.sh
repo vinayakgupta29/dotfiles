@@ -3,12 +3,13 @@
 set -e
 install_yay() {
     git clone https://aur.archlinux.org/yay.git
-    cd yay
+    pushd yay || return 
     makepkg -si
+    popd || return
 }
 
 install_packages() {
-    sudo pacman -S  $(<packagelist)
+    sudo pacman -S $(<packagelist)
 }
 
 set_dolphin_mime() {
@@ -68,62 +69,56 @@ enable_and_start_service() {
 }
 
 install_AUR_packages() {
+
     install_yay
 
-    yay -S  $(<aur_pkg_list)
+    yay -S $(<aur_pkg_list)
 }
+
+
+
 symlink_create() {
-	mkdir -p "$HOME/.config";
+    mkdir -p "$HOME/.config"
+
+    create_symlink() {
+        local app="$1"
+        local src_dir
+        src_dir="$(pwd)/.config/$app"
+        local dest_dir="$HOME/.config/$app"
+
+        if pacman -Qq "$app" &>/dev/null; then
+            [ -e "$dest_dir" ] && rm -rf "$dest_dir"
+            ln -s "$src_dir" "$dest_dir"
+        else
+            echo "$app is not installed"
+        fi
+    }
+
+    # Create symlinks
+    create_symlink hyprland
+    create_symlink waybar
+    create_symlink ranger
+    create_symlink rofi
+    create_symlink mako
+    create_symlink kitty
+    create_symlink fastfetch
+    create_symlink nvim
+
+    # Make .sh files executable in each relevant config directory
     if pacman -Qq hyprland &>/dev/null; then
-        ln -s $(pwd)/.config/hypr $HOME/.config/hypr
-        chmod +x $HOME/.config/hypr/*.sh
-    else
-        echo "hyprland is not installed"
+        find "$(pwd)/.config/hypr" -type f -name "*.sh" -exec chmod +x {} +
     fi
 
     if pacman -Qq waybar &>/dev/null; then
-        ln -s $(pwd)/.config/waybar $HOME/.config/waybar
-        chmod +x $(pwd)/.config/waybar/**/*.sh
-    else
-        echo "waybar is not installed"
+        find "$(pwd)/.config/waybar" -type f -name "*.sh" -exec chmod +x {} +
     fi
 
     if pacman -Qq ranger &>/dev/null; then
-        ln -s $(pwd)/.config/ranger $HOME/.config/ranger
-	find "$(pwd)/.config/ranger" -type f -name "*.sh" -exec chmod +x {} + 2>/dev/null
-    else
-        echo "Ranger is not installed"
+        find "$(pwd)/.config/ranger" -type f -name "*.sh" -exec chmod +x {} +
     fi
 
-    if pacman -Qq rofi &>/dev/null; then
-        ln -s $(pwd)/.config/rofi $HOME/.config/rofi
-    else
-        echo "Rofi is not installed"
-    fi
-
-    if pacman -Qq mako &>/dev/null; then
-        ln -s $(pwd)/.config/mako $HOME/.config/mako
-    else
-        echo "Mako is not installed..."
-    fi
-
-    if pacman -Qq kitty &>/dev/null; then
-        ln -s $(pwd)/.config/kitty $HOME/.config/kitty
-    else
-        echo "Kitty is not installed"
-    fi
-    if pacman -Qq fastfetch &>/dev/null; then
-        ln -s $(pwd)/.config/fastfetch $HOME/.config/fastfetch
-    else
-        echo "Fastfetch is not installed"
-    fi
-    if pacman -Qq nvim &>/dev/null; then
-	    ln -s $(pwd)/.config/nvim $HOME/.config/nvim
-    fi
-
-    echo "Created all Symlinks... 😄"
+    echo "Created all symlinks and set scripts executable"
 }
-
 install_font() {
     mkdir $HOME/.local/share/fonts/
     ln -s $(pwd)/fonts $HOME/.local/share/fonts
@@ -139,7 +134,7 @@ find $(pwd) -type f -name "*.sh" -exec chmod +x {} \; #find . -type f -name "*.s
 
 #install_AUR_packages
 
-symlink_create
+#symlink_create
 
 #install_font
 
