@@ -1,5 +1,5 @@
 #!/bin/bash
-dir="$HOME/scripts"
+dir="$HOME/bin/scripts"
 # Define the default source file
 DEFAULT_SOURCE="$dir/ascii-art.txt"
 # Set the initial source to the default
