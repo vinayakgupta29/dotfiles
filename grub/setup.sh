@@ -5,30 +5,30 @@ mount_windows() {
     set -e
     sudo rm -rf /etc/grub.d/40_custom
 
-    sudo cp ./grub/windows/40_custom /etc/grub.d/40_custom
+    sudo cp "./windows/40_custom" "/etc/grub.d/40_custom"
 }
 
 set_albedo_theme() {
     set -e
     REPO_URL="https://github.com/vinayakgupta29/albedo-grub-theme.git"
-    CLONE_DIR="/tmp/grub-themes"
+    CLONE_DIR="/tmp/grub-themes" 
     THEME_NAME="albedo-grub-theme"
-    DEST_DIR="/boot/grub/themes/$THEME_NAME"
+    DEST_DIR="/boot/grub/themes"
 
     # === Clone the theme repository ===
     echo "Cloning theme repo... $THEME_NAME"
     rm -rf "$CLONE_DIR"
-    git clone "$REPO_URL" "$CLONE_DIR"
+    git clone "$REPO_URL" "$CLONE_DIR/$THEME_NAME"
 
     # === Copy theme to grub directory ===
     echo "Installing theme... $THEME_NAME"
     sudo mkdir -p "$DEST_DIR"
-    sudo cp -r "$CLONE_DIR/$THEME_NAME/"* "$DEST_DIR"
+    sudo cp -r "$CLONE_DIR/$THEME_NAME/"  "$DEST_DIR"
 
     # === Set the theme in GRUB config ===
     echo "Setting GRUB theme..."
     GRUB_CFG="/etc/default/grub"
-    THEME_LINE="GRUB_THEME=$DEST_DIR/theme.txt"
+    THEME_LINE="GRUB_THEME=$DEST_DIR/$THEME_NAME/theme.txt"
 
     # Add or replace the GRUB_THEME line
     if grep -q "^GRUB_THEME=" "$GRUB_CFG"; then
