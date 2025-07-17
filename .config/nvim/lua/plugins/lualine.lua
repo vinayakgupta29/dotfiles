@@ -35,21 +35,20 @@ return {
       vim.o.laststatus = 3
       require('lualine').setup {
         options = {
-          theme = dark_theme,  -- <-- set the theme here
-          section_separators = {'', ''},
-          component_separators = {'', ''},
+          --theme =  <-- set the theme here
+          -- section_separators = { '', '' },
+          -- component_separators = { '>', '<' },
           icons_enabled = true,
         },
         sections = {
-          lualine_a = {'mode'},
-          lualine_b = {'branch', 'diff', 'diagnostics'},
-          lualine_c = {'filename'},
-          lualine_x = {'encoding', 'fileformat', 'filetype'},
-         lualine_y = {},
-          lualine_z = {'location'}
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch', 'diff', 'diagnostics' },
+          lualine_c = { 'filename' },
+          lualine_x = { 'encoding', 'fileformat', 'filetype' },
+          lualine_y = {},
+          lualine_z = { 'location' }
         },
       }
     end,
   },
 }
-
