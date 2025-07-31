@@ -51,7 +51,7 @@ end, { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>fg", function()
   telescope.live_grep({
     cwd = vim.loop.cwd(),
-    additional_args = { "--hidden" }, -- also search hidden files
+    additional_args = { "--hidden", "--ignore-case" }, -- also search hidden files
   })
 end, { noremap = true, silent = true })
 
