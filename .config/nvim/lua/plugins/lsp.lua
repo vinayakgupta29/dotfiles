@@ -10,7 +10,16 @@ return {
     config = function()
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "pyright", "ltext-ls", "prettier", "html", "cssls", "typescript-language-server" },
+        ensure_installed = { "lua_ls",
+          "pyright",
+          "ltex-ls",
+          "prettier",
+          "html",
+          "cssls",
+          "ts_ls",
+          "jsonls",
+          "clangd",
+          "cpplint" },
       })
 
       local lspconfig = require("lspconfig")
