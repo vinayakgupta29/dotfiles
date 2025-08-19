@@ -7,6 +7,7 @@ exec tail -n +3 $0
 menuentry "Windows 11" --class windows {
 	insmod part_gpt
 	insmod fat
+  insmod chain
 	set root='(hd0,gpt1)'
 	chainloader /EFI/Microsoft/Boot/bootmgfw.efi
 }

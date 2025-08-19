@@ -10,7 +10,8 @@ return {
     config = function()
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls",
+        ensure_installed = {
+          "lua_ls",
           "pyright",
           "ltex-ls",
           "prettier",
@@ -19,10 +20,26 @@ return {
           "ts_ls",
           "jsonls",
           "clangd",
-          "cpplint" },
+          "cpplint"
+        },
       })
 
       local lspconfig = require("lspconfig")
+
+      -- HTML
+      lspconfig.html.setup({
+        capabilities = capabilities,
+      })
+
+      -- CSS
+      lspconfig.cssls.setup({
+        capabilities = capabilities,
+      })
+
+      -- JavaScript / TypeScript
+      lspconfig.tsserver.setup({
+        capabilities = capabilities,
+      })
 
       -- Global keymaps on LSP attach
       vim.api.nvim_create_autocmd("LspAttach", {
