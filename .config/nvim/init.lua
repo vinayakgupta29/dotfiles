@@ -29,7 +29,6 @@ vim.api.nvim_set_hl(0, "NeoTreeExecutable", { fg = "#32CD32" }) -- lime green
 
 require("config.lazy")
 
--- Close the buffer
 
 vim.diagnostic.config({
   virtual_text = true,
