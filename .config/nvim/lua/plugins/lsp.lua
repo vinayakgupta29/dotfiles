@@ -1,5 +1,14 @@
 -- plugins/lsp.lua
-local opts = {}
+local opts = {
+  servers = {
+    html = {},
+    cssls = {},
+    ts_ls = {},
+    emmet_ls = {
+      filetypes = { "html", "css", "javascriptreact", "typescriptreact", "vue", "svelte" },
+    },
+  },
+}
 return {
   {
     "neovim/nvim-lspconfig",
@@ -7,6 +16,7 @@ return {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
+    opts = opts,
     config = function()
       require("mason").setup()
       require("mason-lspconfig").setup({
@@ -37,7 +47,7 @@ return {
       })
 
       -- JavaScript / TypeScript
-      lspconfig.tsserver.setup({
+      lspconfig.ts_ls.setup({
         capabilities = capabilities,
       })
 
