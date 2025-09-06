@@ -22,3 +22,5 @@ battery_icon=${battery_icons[icon_index]}
 if [ "$battery_status" = "Charging" ]; then
 	battery_icon="$charging_icon"
 fi
+
+echo "$battery_icon $battery_percentage%" 
