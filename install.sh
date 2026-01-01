@@ -128,21 +128,21 @@ install_font() {
 
 find $(pwd) -type f -name "*.sh" -exec chmod +x {} \; #find . -type f -name "*.sh" -exec chmod +x {} \;
 
-#install_packages
+install_packages
 
-#enable_services
+enable_services
 
-#install_AUR_packages
+install_AUR_packages
 
-#symlink_create
+symlink_create
 
-#install_font
+install_font
 
-#install_sounds
+install_sounds
 
 set_dolphin_mime
 
-#setup_xterm
+setup_xterm
 
 setup_shell
 

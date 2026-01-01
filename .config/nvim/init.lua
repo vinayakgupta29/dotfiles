@@ -13,6 +13,9 @@ vim.api.nvim_set_hl(0, "StatusLine", {})
 
 vim.o.mouse = "a"
 
+if vim.g.neovide then
+  vim.o.guifont = "FiraCode Nerd Font:h10"
+end
 -- If nvim is launched with a directory as the first argument,
 -- set that directory as the working directory
 vim.api.nvim_create_autocmd("VimEnter", {
@@ -25,6 +28,21 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 
 vim.api.nvim_set_hl(0, "NeoTreeExecutable", { fg = "#32CD32" }) -- lime green
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    -- If Neo-tree is focused
+    if vim.bo.filetype == "neo-tree" then
+      -- Count listed (real) buffers
+      local listed_buffers = vim.fn.len(vim.fn.getbufinfo({ buflisted = 1 }))
+      local win_count = #vim.api.nvim_list_wins()
+
+      -- If Neo-tree is the only window AND there are no other buffers, quit nvim
+      if listed_buffers == 1 and win_count == 1 then
+        vim.cmd("quit")
+      end
+    end
+  end,
+})
 
 
 require("config.lazy")

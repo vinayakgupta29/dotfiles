@@ -1,0 +1,9 @@
+preload = '/home/zoro/wallpapers/Topaz.(Honkai.Star.Rail).full.4166812.jpg'
+
+wallpaper {
+  monitor = eDP-1
+  path = '/home/zoro/wallpapers/Topaz.(Honkai.Star.Rail).full.4166812.jpg'
+  fit_mode = cover
+}
+
+ipc = true
