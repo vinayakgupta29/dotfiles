@@ -9,7 +9,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-alias hypr='Hyprland'
+alias hypr='start-hyprland'
 
 alias gitcm="git commit -m"
 alias gitpo="git push origin"
@@ -19,6 +19,8 @@ alias docker="sudo docker"
 alias docker-compose="sudo docker-compose"
 
 export PATH="$HOME/bin/scripts:$PATH"
+
+export PATH="$HOME/go/bin/:$PATH"
 
 export PATH="$HOME/bin:$PATH"
 # Add Flutter to PATH
@@ -44,7 +46,6 @@ export CHROME_EXECUTABLE="/opt/google/chrome/chrome"
 force_color_prompt=yes
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
-
 
 mountntfs() {
     if [ -z "$1" ]; then

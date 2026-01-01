@@ -1,14 +1,4 @@
 -- plugins/lsp.lua
-local opts = {
-  servers = {
-    html = {},
-    cssls = {},
-    ts_ls = {},
-    emmet_ls = {
-      filetypes = { "html", "css", "javascriptreact", "typescriptreact", "vue", "svelte" },
-    },
-  },
-}
 return {
   {
     "neovim/nvim-lspconfig",
@@ -16,68 +6,65 @@ return {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
-    opts = opts,
+
     config = function()
-      require("mason").setup()
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "lua_ls",
-          "pyright",
-          "ltex-ls",
-          "prettier",
-          "html",
-          "cssls",
-          "ts_ls",
-          "jsonls",
-          "clangd",
-          "cpplint"
-        },
-      })
-
-      local lspconfig = require("lspconfig")
-
-      -- HTML
-      lspconfig.html.setup({
-        capabilities = capabilities,
-      })
-
-      -- CSS
-      lspconfig.cssls.setup({
-        capabilities = capabilities,
-      })
-
-      -- JavaScript / TypeScript
-      lspconfig.ts_ls.setup({
-        capabilities = capabilities,
-      })
-
-      -- Global keymaps on LSP attach
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(event)
-          local opts = { noremap = true, silent = true, buffer = event.buf }
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-          vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-          vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format { async = true } end, opts)
-        end,
-      })
-
-      -- 🧠 SAFELY call setup_handlers
+      local mason = require("mason")
       local mason_lspconfig = require("mason-lspconfig")
-      if mason_lspconfig.setup_handlers then
-        mason_lspconfig.setup_handlers({
-          function(server_name)
-            lspconfig[server_name].setup({})
-          end,
-        })
-      else
-        -- fallback if you're on older mason-lspconfig
-        local servers = mason_lspconfig.get_installed_servers()
-        for _, server in ipairs(servers) do
-          lspconfig[server].setup({})
-        end
+
+      mason.setup()
+
+      -- Define your LSP servers
+      local servers = {
+        html = {},
+        cssls = {},
+        ts_ls = {},
+        emmet_ls = {
+          filetypes = { "html", "css", "javascriptreact", "typescriptreact", "vue", "svelte" },
+        },
+        lua_ls = {},
+        pyright = {},
+        ltex = {},
+        jsonls = {},
+        clangd = {},
+        gopls = {},
+      }
+
+      mason_lspconfig.setup({
+        ensure_installed = vim.tbl_keys(servers),
+        -- automatic_installation = true, -- optional, installs missing ones
+      })
+
+      -- Capabilities (add cmp_nvim_lsp if you use it)
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local ok_cmp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
+      if ok_cmp then
+        capabilities = cmp_lsp.default_capabilities(capabilities)
+      end
+
+      -- Global keymaps
+      local on_attach = function(_, bufnr)
+        local opts = { noremap = true, silent = true, buffer = bufnr }
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+        vim.keymap.set("n", "<leader>f", function()
+          vim.lsp.buf.format({ async = true })
+        end, opts)
+      end
+
+      -- Set defaults for all LSPs
+      vim.lsp.config("*", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+
+      vim.diagnostic.config({ virtual_text = true })
+      -- Apply server-specific configs and enable each
+      for name, config in pairs(servers) do
+        vim.lsp.config(name, config)
+        vim.lsp.enable(name)
       end
     end,
   },
