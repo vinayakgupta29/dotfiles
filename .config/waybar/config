@@ -128,8 +128,8 @@
 			"󰂂",
 			"󰁹"
 		],
-		"exec":"~/.config/waybar/scripts/battery-monitor.sh"
 	},
+ 
 	"custom/missioncenter": {
 		"format": "󰈸",
 		"on-click": "missioncenter",
@@ -289,4 +289,5 @@
 		"max-length": 30
 		
 	}
+
 }

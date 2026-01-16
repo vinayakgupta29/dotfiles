@@ -26,8 +26,7 @@ while true; do
     while IFS= read -r WALLPAPER; do
         if [ -n "$WALLPAPER" ]; then
             # Preload the selected wallpaper
-            hyprctl hyprpaper preload "$WALLPAPER"
-            
+            # hyprctl hyprpaper preload "$WALLPAPER"
             # Set the wallpaper for all monitors
             hyprctl hyprpaper wallpaper ",$WALLPAPER"
             
@@ -36,7 +35,7 @@ while true; do
             
             # Unload wallpapers to keep RAM usage low
             # (Unloads everything except the one currently active)
-            hyprctl hyprpaper unload all
+            # hyprctl hyprpaper unload all
         fi
     done <<< "$WALLPAPER_LIST"
     

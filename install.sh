@@ -117,6 +117,7 @@ symlink_create() {
         find "$(pwd)/.config/ranger" -type f -name "*.sh" -exec chmod +x {} +
     fi
 
+   
     echo "Created all symlinks and set scripts executable"
 }
 install_font() {
