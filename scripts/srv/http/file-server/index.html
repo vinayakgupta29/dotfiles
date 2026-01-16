@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File Manager</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+<h1>📁 File Manager</h1>
+<nav>
+<button onclick="loadDir('Downloads')">Downloads</button>
+<button onclick="loadDir('Documents')">Documents</button>
+</nav>
+</header>
+<div id="breadcrumb"></div>
+<div id="files-container" class="files-grid"></div>
+
+<div id="preview-modal" class="modal">
+<div id="preview-content"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
