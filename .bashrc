@@ -68,9 +68,4 @@ if [ -d "$FNM_PATH" ]; then
   eval "`fnm env`"
 fi
 
-# fnm
-FNM_PATH="/home/zoro/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  eval "`fnm env`"
-fi
+

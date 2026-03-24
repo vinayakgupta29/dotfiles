@@ -6,6 +6,8 @@ WALLPAPER_DIR="$HOME/wallpapers"
 # 3 minutes = 180 seconds
 INTERVAL=60
 
+COLORS_FILE="$HOME/.config/hypr/hyprcolors.conf"
+
 # Check if hyprpaper is running, if not start it
 if ! pgrep -x "hyprpaper" > /dev/null; then
     hyprpaper &
@@ -21,6 +23,23 @@ if [ -z "$WALLPAPER_LIST" ]; then
     exit 1
 fi
 
+update_colors() {
+    local WALL="$1"
+
+    wal -i "$WALL" -n -q -s -t
+
+    ACCENT1=$(sed -n '1p' ~/.cache/wal/colors)
+    ACCENT2=$(sed -n '2p' ~/.cache/wal/colors)
+
+    cat > "$COLORS_FILE" <<EOF
+\$accent1 = rgba(${ACCENT1#\#}ff)
+\$accent2 = rgba(${ACCENT2#\#}ff)
+EOF
+
+    hyprctl reload >/dev/null
+}
+
+
 # 2. Iterate through the shuffled list
 while true; do
     while IFS= read -r WALLPAPER; do
@@ -28,8 +47,10 @@ while true; do
             # Preload the selected wallpaper
             # hyprctl hyprpaper preload "$WALLPAPER"
             # Set the wallpaper for all monitors
-            hyprctl hyprpaper wallpaper ",$WALLPAPER"
-            
+           
+           #hyprctl hyprpaper wallpaper ",$WALLPAPER"
+
+            update_colors "$WALLPAPER"
             # Wait for the specified interval
             sleep "$INTERVAL"
             
