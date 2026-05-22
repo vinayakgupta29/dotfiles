@@ -15,4 +15,30 @@ try(){
 
 
 }
-try
+ create_symlink() {
+    local app="$1"
+
+    local pkg_name="$app"
+    local config_name="$app"
+
+    case "$app" in
+        noctalia)
+            pkg_name="noctalia-shell"
+            config_name="noctalia"
+            ;;
+    esac
+
+    local src_dir
+    src_dir="$(pwd)/.config/$config_name"
+
+    local dest_dir="$HOME/.config/$config_name"
+
+    if pacman -Qq "$pkg_name" &>/dev/null; then
+        [ -e "$dest_dir" ] && rm -rf "$dest_dir"
+        ln -s "$src_dir" "$dest_dir"
+    else
+        echo "$pkg_name is not installed"
+    fi
+}
+create_symlink noctalia
+

@@ -1,0 +1,13 @@
+{
+  "currentIm": "keyboard-us",
+  "ims": [
+    "keyboard-us",
+    "m17n_hi_itrans",
+    "m17n_sa_itrans",
+    "mozc",
+    "m17n_hi_vedmata",
+    "m17n_hi_inscript2"
+  ],
+  "panelWidth": 600,
+  "panelHeight": 400
+}
