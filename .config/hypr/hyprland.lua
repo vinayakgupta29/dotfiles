@@ -127,11 +127,12 @@ hl.config({
     sensitivity = 0,
 
     touchpad = {
-      natural_scroll = true,
-      tap_to_click = true,
-      tap_and_drag = true,
-      clickfinger_behavior = true,
-    },
+      natural_scroll = true,       -- Mac-style scrolling
+      tap_to_click = true,         -- tap = click
+      tap_and_drag = true,         -- tap-drag enabled
+      clickfinger_behavior = true, -- multi-finger click enabled
+      disable_while_typing = true, -- optional, prevents accidental touches
+    }
   },
 })
 
@@ -232,10 +233,7 @@ hl.device({
 -- Per-device settings
 ----------------------------------------------------------------------
 
-hl.device({
-  name = "epic-mouse-v1",
-  sensitivity = -0.5,
-})
+
 
 ----------------------------------------------------------------------
 -- Built-in window rules from your original config

@@ -80,21 +80,31 @@ install_AUR_packages() {
 symlink_create() {
     mkdir -p "$HOME/.config"
 
-    create_symlink() {
-        local app="$1"
-        local src_dir
-        src_dir="$(pwd)/.config/$app"
-        local dest_dir="$HOME/.config/$app"
+     create_symlink() {
+       local app="$1"
+       local pkg_name="$app"
+       local config_name="$app"
 
-        if pacman -Qq "$app" &>/dev/null; then
-            [ -e "$dest_dir" ] && rm -rf "$dest_dir"
-            ln -s "$src_dir" "$dest_dir"
-        else
-            echo "$app is not installed"
-        fi
-    }
+       case "$app" in
+         noctalia)
+           pkg_name="noctalia-shell"
+           config_name="noctalia"
+           ;;
+       esac
 
-    # Create symlinks
+       local src_dir
+       src_dir="$(pwd)/.config/$config_name"
+
+       local dest_dir="$HOME/.config/$config_name"
+
+       if pacman -Qq "$pkg_name" &>/dev/null; then
+         [ -e "$dest_dir" ] && rm -rf "$dest_dir"
+         ln -s "$src_dir" "$dest_dir"
+       else
+         echo "$pkg_name is not installed"
+       fi
+     }    
+   # Create symlinks
     create_symlink hyprland
     create_symlink waybar
     create_symlink ranger
@@ -103,6 +113,7 @@ symlink_create() {
     create_symlink kitty
     create_symlink fastfetch
     create_symlink nvim
+    create_symlink noctalia
 
     # Make .sh files executable in each relevant config directory
     if pacman -Qq hyprland &>/dev/null; then
@@ -120,6 +131,8 @@ symlink_create() {
    
     echo "Created all symlinks and set scripts executable"
 }
+
+
 install_font() {
     mkdir $HOME/.local/share/fonts/
     ln -s $(pwd)/fonts $HOME/.local/share/fonts
