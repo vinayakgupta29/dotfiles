@@ -27,6 +27,7 @@ return {
         jsonls = {},
         clangd = {},
         gopls = {},
+        qmlls = {},
       }
 
       mason_lspconfig.setup({

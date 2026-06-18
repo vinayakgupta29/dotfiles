@@ -13,8 +13,8 @@ return {
         json = { "prettier" },
         lua = { "stylua" },
         python = { "black" },
+        qml = { "qmlformat" },
       },
     },
   }
 }
-

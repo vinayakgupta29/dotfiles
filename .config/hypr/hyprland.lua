@@ -105,6 +105,15 @@ hl.config({
     preserve_split = true,
   },
 
+  scrolling = {
+    column_width = 0.8,
+    fullscreen_on_one_column = true,
+    direction = "right",
+    follow_focus = true,
+    wrap_focus = true,
+    focus_fit_method = 1,
+  },
+
   master = {
     new_status = "master",
   },
@@ -221,14 +230,14 @@ hl.device({
 })
 
 ----------------------------------------------------------------------
--- Gestures
+-- Workspace Rules
 ----------------------------------------------------------------------
 
---  hl.gesture({
---  fingers = 3,
---  direction = "horizontal",
---  action = "workspace",
--- }) ]]
+hl.workspace_rule({
+  workspace = "1",
+  layout = "scrolling",
+})
+
 ----------------------------------------------------------------------
 -- Per-device settings
 ----------------------------------------------------------------------
