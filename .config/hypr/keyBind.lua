@@ -8,7 +8,7 @@
 
 terminal = "kitty"
 fileManager = "dolphin"
-browser = "firefox"
+browser = "zen-browser"
 
 reboot = 'notify-send "Rebooting..." && sleep 3 && reboot'
 shutdown = [[sh -c 'notify-send "Shutting down..." ; (sleep 1; systemctl poweroff) &']]
@@ -25,21 +25,35 @@ monitor_d = "DP-1"
 -- Core keybindings
 ----------------------------------------------------------------------
 
-hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + M", hl.dsp.exit())
-hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(fileManager))
--- hl.bind(mainMod .. " + SHIFT + F", hl.dsp.togglefloating())
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("resizewindow"))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
---hl.bind(mainMod .. " + J", hl.dsp.window.togglesplit())
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("sudo systemctl restart sddm"))
-hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind("ALT + SPACE", hl.dsp.exec_cmd("pkill rofi || " .. menu))
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(reboot))
-hl.bind(mainMod .. " + END", hl.dsp.exec_cmd(shutdown))
-hl.bind(mainMod .. " + COMMA", hl.dsp.exec_cmd("emote"))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
+binds = {
+  { mainMod,              "T",     hl.dsp.exec_cmd(terminal) },
+  { mainMod,              "M",     hl.dsp.exit() },
+  { mainMod,              "F",     hl.dsp.exec_cmd(fileManager) },
+  { mainMod .. "+ SHIFT", "F",     hl.dsp.window.float() },
+  { mainMod,              "R",     hl.dsp.exec_cmd("resizewindow") },
+  { mainMod,              "P",     hl.dsp.window.pseudo() },
+  -- { mainMod, "J", hl.dsp.window.togglesplit() },
+  { mainMod,              "L",     hl.dsp.exec_cmd("sudo systemctl restart sddm") },
+  { mainMod,              "Q",     hl.dsp.window.close() },
+  { "ALT",                "SPACE", hl.dsp.exec_cmd("pkill rofi || " .. menu) },
+  { mainMod .. "+ SHIFT", "R",     hl.dsp.exec_cmd(reboot) },
+  { mainMod,              "END",   hl.dsp.exec_cmd(shutdown) },
+  { mainMod,              "COMMA", hl.dsp.exec_cmd("emote") },
+  { mainMod,              "B",     hl.dsp.exec_cmd(browser) },
 
+  -- Scrolling layout
+  { mainMod,              "H",     hl.dsp.layout("move -col") },
+  { mainMod,              "L",     hl.dsp.layout("move +col") },
+  { mainMod .. "+ SHIFT", "H",     hl.dsp.layout("swapcol l") },
+  { mainMod .. "+ SHIFT", "L",     hl.dsp.layout("swapcol r") },
+  { mainMod,              "MINUS", hl.dsp.layout("colresize -0.1") },
+  { mainMod,              "EQUAL", hl.dsp.layout("colresize +0.1") },
+  { mainMod,              "C",     hl.dsp.layout("fit active") },
+}
+
+for _, bind in ipairs(binds) do
+  hl.bind(bind[1] .. " + " .. bind[2], bind[3])
+end
 ----------------------------------------------------------------------
 -- Focus movement
 ----------------------------------------------------------------------
