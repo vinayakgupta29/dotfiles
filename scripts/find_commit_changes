@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+root_dir="${1:-.}"
+
+find "$root_dir" -type d -name .git -print0 |
+while IFS= read -r -d '' gitdir; do
+    repo_dir="${gitdir%/.git}"
+
+    status=$(git -C "$repo_dir" status --porcelain 2>/dev/null)
+    stashes=$(git -C "$repo_dir" stash list 2>/dev/null)
+
+    if [[ -n "$status" || -n "$stashes" ]]; then
+        echo "$repo_dir"
+    fi
+done
