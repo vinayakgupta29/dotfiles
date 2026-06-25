@@ -22,9 +22,9 @@ try(){
     local config_name="$app"
 
     case "$app" in
-        noctalia)
-            pkg_name="noctalia-shell"
-            config_name="noctalia"
+      fish)
+            pkg_name="fish"
+            config_name="fish"
             ;;
     esac
 
@@ -40,5 +40,5 @@ try(){
         echo "$pkg_name is not installed"
     fi
 }
-create_symlink noctalia
+create_symlink fish
 
