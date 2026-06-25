@@ -105,15 +105,16 @@ symlink_create() {
        fi
      }    
    # Create symlinks
+    create_symlink fastfetch
+    create_symlink fish
     create_symlink hyprland
-    create_symlink waybar
+    create_symlink kitty
+    create_symlink mako
+    create_symlink noctalia
+    create_symlink nvim
     create_symlink ranger
     create_symlink rofi
-    create_symlink mako
-    create_symlink kitty
-    create_symlink fastfetch
-    create_symlink nvim
-    create_symlink noctalia
+    create_symlink waybar
 
     # Make .sh files executable in each relevant config directory
     if pacman -Qq hyprland &>/dev/null; then
