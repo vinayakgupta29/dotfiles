@@ -8,7 +8,8 @@ alias ls='ls --color=auto'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-
+# Adds syntax highlighting in bash but i don't use bash that often just the fish shell
+# source  /usr/share/blesh/ble.sh
 alias hypr='start-hyprland'
 
 alias gitcm="git commit -m"
@@ -22,13 +23,16 @@ export PATH="$HOME/bin/scripts:$PATH"
 
 export PATH="$HOME/go/bin/:$PATH"
 
+export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
+
 export PATH="$HOME/bin:$PATH"
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
 # Add Flutter to PATH
 export PATH="$HOME/flutter/flutter/bin:$PATH"
 
-export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
-
-export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
 
 export XCURSOR_THEME="Anya_cursor"
@@ -49,10 +53,13 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 
 mountntfs() {
     if [ -z "$1" ]; then
-        echo "Usage: mountntfs <device>"
+        echo "Usage: mountntfs <device> [mountpoint]"
         return 1
     fi
-    sudo mount -t ntfs-3g "$1" /mnt/ntfs_partition/
+
+    local mountpoint="${2:-/mnt/ntfs_partition}"
+
+    sudo mount -t ntfs-3g "$1" "$mountpoint"
 }
 
 PS1='
