@@ -9,9 +9,14 @@ install_yay() {
 }
 
 install_packages() {
-    sudo pacman -S $(<packagelist)
-}
+    local packages
 
+    mapfile -t packages < <(
+        sed -E 's/#.*$//; /^\s*$/d' packages.lst
+    )
+
+    sudo pacman -S "${packages[@]}"
+}
 set_dolphin_mime() {
     curl --create-dirs -L https://raw.githubusercontent.com/KDE/plasma-workspace/master/menu/desktop/plasma-applications.menu -o "$HOME/.config/menus/applications.menu"
     kbuildsycoca6;
@@ -72,7 +77,7 @@ install_AUR_packages() {
 
     install_yay
 
-    yay -S $(<aur_pkg_list)
+    yay -S $(<aur_pkg.lst)
 }
 
 
