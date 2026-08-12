@@ -11,7 +11,7 @@ vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set({ "i", "v", "t" }, "<C-c>", "<Esc>")
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 -- Paste from system clipboard in visual mode
-vim.keymap.set("v", "<leader>p", [["+p]])
+vim.keymap.set("x", "<leader>p", [["_d"+P]])
 
 -- Cut (delete) to system clipboard in visual mode
 vim.keymap.set("v", "<leader>x", [["+d]])
@@ -83,11 +83,28 @@ vim.keymap.set("n", "<leader>/", function()
   require("Comment.api").toggle.linewise.current()
 end, { noremap = true, silent = true })
 
-vim.keymap.set("v", "<leader>/", function()
-  require("Comment.api").toggle.linewise(vim.fn.visualmode())
-end, { noremap = true, silent = true })
+vim.keymap.set("x", "<leader>/", "gc", {
+  remap = true,
+  desc = "Toggle comment",
+})
+vim.keymap.set("x", "C-/", "gb", {
+  remap = true,
+  desc = "Toggle comment",
+})
 
 -- Block-wise comment in visual mode (e.g. /* comment */)
 vim.keymap.set("v", "<leader>?", function()
   require("Comment.api").toggle.blockwise(vim.fn.visualmode())
 end, { noremap = true, silent = true })
+
+
+-- Diagnostics messages in Normal mode
+--
+-- vim.keymap.set("n", "gl", function()
+--   vim.diagnostic.open_float({
+--     focusable = true,
+--     border = "rounded",
+--     source = "always",
+--     max_width = 120,
+--   })
+-- end, { desc = "Show diagnostic" })
