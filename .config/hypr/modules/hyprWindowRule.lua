@@ -13,21 +13,6 @@ hl.window_rule({
 })
 
 ----------------------------------------------------------------------
--- Calculator windows
-----------------------------------------------------------------------
-
--- Matches classes ending in ".Calculator"
-hl.window_rule({
-  name = "window_rule-2",
-  float = true,
-  center = true,
-  match = {
-    class = "^(.*%.Calculator)$",
-  },
-  size = "400 600",
-})
-
-----------------------------------------------------------------------
 -- GNOME Calendar
 ----------------------------------------------------------------------
 
@@ -122,6 +107,14 @@ hl.window_rule({
   }
 })
 
+hl.window_rule({
+  name = "window_rule-11",
+  float = true,
+  match = {
+    class = "zen",
+    title = "Picture-in-Picture"
+  }
+})
 ----------------------------------------------------------------------
 -- Optional Inkscape import dialog (disabled in original config)
 ----------------------------------------------------------------------
@@ -133,3 +126,29 @@ hl.window_rule({
 --   ["match:class"] = "^(inkscape)$",
 --   ["match:title"] = "image import",
 -- })
+hl.window_rule({
+  name = "PiP",
+  float = true,
+  size = "320 180",
+  match = {
+    class = "^zen$",
+    title = "^Picture-in-Picture$",
+  },
+})
+
+hl.on("workspace.active", function(ws)
+  for _, win in ipairs(hl.get_windows()) do
+    if win.class == "zen"
+        and win.title == "Picture-in-Picture" then
+      hl.dispatch(
+        hl.dsp.window.move({
+          window = win,
+          workspace = ws.id,
+          follow = false,
+        })
+      )
+
+      break
+    end
+  end
+end)

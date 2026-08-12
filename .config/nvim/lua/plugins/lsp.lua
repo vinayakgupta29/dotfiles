@@ -28,6 +28,24 @@ return {
         clangd = {},
         gopls = {},
         qmlls = {},
+        rust_analyzer = {
+          procMacro = {
+            enable = false,
+          },
+          cargo = {
+            allFeatures = false,
+            buildScripts = {
+              enable = false,
+            },
+          },
+          checkOnSave = false,
+          diagnostics = {
+            enable = false,
+          },
+          inlayHints = {
+            enable = false,
+          },
+        },
       }
 
       mason_lspconfig.setup({

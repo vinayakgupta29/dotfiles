@@ -1,12 +1,7 @@
 return {
   "vinayakgupta29/sauce.nvim",
-  config = function()
-    require("sauce").setup()
-
-    -- optional: try installing parser (safe)
-    pcall(function()
-      require("nvim-treesitter.install").install("saucelang")
-    end)
+  config = function(_, opts)
+    require("sauce").setup(opts)
 
     -- apply highlights after colorscheme loads
     local function set_colors()
