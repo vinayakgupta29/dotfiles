@@ -12,7 +12,9 @@ vim.keymap.set({ "i", "v", "t" }, "<C-c>", "<Esc>")
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 -- Paste from system clipboard in visual mode
 vim.keymap.set("x", "<leader>p", [["_d"+P]])
-
+-- Normal mode mapping like any other text editor
+vim.keymap.set("n", "<leader>p", "a<C-r>+")
+vim.keymap.set("x", "<leader>p", [["_dP]])
 -- Cut (delete) to system clipboard in visual mode
 vim.keymap.set("v", "<leader>x", [["+d]])
 vim.keymap.set("n", "<leader>f", function()
