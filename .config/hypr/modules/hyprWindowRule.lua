@@ -107,14 +107,6 @@ hl.window_rule({
   }
 })
 
-hl.window_rule({
-  name = "window_rule-11",
-  float = true,
-  match = {
-    class = "zen",
-    title = "Picture-in-Picture"
-  }
-})
 ----------------------------------------------------------------------
 -- Optional Inkscape import dialog (disabled in original config)
 ----------------------------------------------------------------------
@@ -130,6 +122,10 @@ hl.window_rule({
   name = "PiP",
   float = true,
   size = "320 180",
+  move = {
+    "monitor_w-window_w-10",
+    "44",
+  },
   match = {
     class = "^zen$",
     title = "^Picture-in-Picture$",
