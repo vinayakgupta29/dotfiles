@@ -19,6 +19,7 @@ alias gitpl="git pull origin"
 alias docker="sudo docker"
 alias docker-compose="sudo docker-compose"
 
+export PATH="$HOME/personal/saucelist/.scripts:$PATH"
 export PATH="$HOME/bin/scripts:$PATH"
 
 export PATH="$HOME/go/bin/:$PATH"

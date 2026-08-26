@@ -4,3 +4,4 @@ login-man
 *.log
 yay/
 .qodo
+.config/nvim/lazy-lock.json

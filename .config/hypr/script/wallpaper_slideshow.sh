@@ -15,13 +15,20 @@ if ! pgrep -x "hyprpaper" > /dev/null; then
 fi
 
 # 1. Get all wallpapers and shuffle them ONCE at the start
-WALLPAPER_LIST=$(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" -o -name "*.webp" \) | shuf)
+# Get all wallpapers and shuffle them ONCE at the start
+mapfile -t WALLPAPER_LIST < <(
+    find "$WALLPAPER_DIR" -type f \
+        \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" -o -name "*.webp" \) |
+    shuf
+)
 
 # Check if any wallpapers were found
-if [ -z "$WALLPAPER_LIST" ]; then
+if [ ${#WALLPAPER_LIST[@]} -eq 0 ]; then
     echo "No wallpapers found in $WALLPAPER_DIR"
     exit 1
 fi
+
+echo "Found ${#WALLPAPER_LIST[@]} wallpapers"
 
 update_colors() {
     local WALL="$1"
@@ -48,19 +55,20 @@ EOF
 while true; do
     while IFS= read -r WALLPAPER; do
         if [ -n "$WALLPAPER" ]; then
-            # Preload the selected wallpaper
-            # hyprctl hyprpaper preload "$WALLPAPER"
-            # Set the wallpaper for all monitors
+          # Preload the selected wallpaper
+          # hyprctl hyprpaper preload "$WALLPAPER"
+          # Set the wallpaper for all monitors
            
-           #hyprctl hyprpaper wallpaper ",$WALLPAPER"
+          hyprctl hyprpaper wallpaper ",$WALLPAPER"
 
-            update_colors "$WALLPAPER"
-            # Wait for the specified interval
-            sleep "$INTERVAL"
+          update_colors "$WALLPAPER"
+          
+          # Wait for the specified interval
+          sleep "$INTERVAL"
             
-            # Unload wallpapers to keep RAM usage low
-            # (Unloads everything except the one currently active)
-            # hyprctl hyprpaper unload all
+          # Unload wallpapers to keep RAM usage low
+          # (Unloads everything except the one currently active)
+          # hyprctl hyprpaper unload all
         fi
     done <<< "$WALLPAPER_LIST"
     
