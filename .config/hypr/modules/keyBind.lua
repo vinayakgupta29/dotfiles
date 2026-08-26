@@ -58,6 +58,21 @@ end
 -- Focus movement
 ----------------------------------------------------------------------
 
+
+-- Workspace 1 specific binds
+hl.bind("CTRL + ALT + LEFT", function()
+  if hl.get_active_workspace().id == 1 then
+    hl.dispatch(hl.dsp.focus({ direction = "left" }))
+  end
+end)
+
+hl.bind("CTRL + ALT + RIGHT", function()
+  if hl.get_active_workspace().id == 1 then
+    hl.dispatch(hl.dsp.focus({ direction = "right" }))
+  end
+end)
+
+
 hl.bind(mainMod .. " + LEFT", hl.dsp.focus({ direction = "l" }))
 hl.bind(mainMod .. " + RIGHT", hl.dsp.focus({ direction = "r" }))
 hl.bind(mainMod .. " + UP", hl.dsp.focus({ direction = "u" }))
