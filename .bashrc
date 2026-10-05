@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Start Hyprland if not running and if this is a TTY login shell
 #if [[ -z "$WAYLAND_DISPLAY" ]] && [[ "$(tty)" == "/dev/tty1" ]] && ! pgrep -x Hyprland > /dev/null; then
  # Hyprland
@@ -23,6 +24,8 @@ export PATH="$HOME/personal/saucelist/.scripts:$PATH"
 export PATH="$HOME/bin/scripts:$PATH"
 
 export PATH="$HOME/go/bin/:$PATH"
+
+export PATH="$HOME/.local/bin:$PATH"
 
 export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
 
@@ -80,3 +83,7 @@ export ANDROID_HOME="$HOME/Android/Sdk"
 export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
 export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
 
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/zoro/.local/bin:$PATH"

@@ -34,7 +34,7 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("fcitx5")
 
   -- Status bar / shell
-  local noctalia = "quickshell -c noctalia-shell"
+  local noctalia = "noctalia"
   local wallpaper = "/home/zoro/.config/hypr/script/wallpaper_slideshow.sh"
   local swaync = "swaync"
   local waybar = "waybar"

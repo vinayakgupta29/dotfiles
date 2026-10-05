@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Function to get metadata using playerctl
 get_metadata() {
@@ -21,8 +21,6 @@ get_source_info() {
 		echo ""
 	fi
 }
-
-#!/bin/bash
 
 title=$(playerctl metadata --format '{{title}}')
 artist=$(playerctl metadata --format '{{artist}}')

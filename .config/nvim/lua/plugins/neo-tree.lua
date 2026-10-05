@@ -88,6 +88,12 @@ local opts = {
         vim.fn.setreg("+", relpath)
         vim.notify("Copied relative path: " .. relpath)
       end,
+      ["Y"] = function(state)
+        local node = state.tree:get_node()
+        local fullpath = vim.fn.fnamemodify(node.path, ":p")
+        vim.fn.setreg("+", fullpath)
+        vim.notify("Copied full path: " .. fullpath)
+      end,
     },
   },
   default_component_configs = {

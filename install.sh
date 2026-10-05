@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 install_yay() {
@@ -138,6 +138,61 @@ symlink_create() {
     echo "Created all symlinks and set scripts executable"
 }
 
+noctalia_v5_setup() {
+    local src="$PWD/.config/noctalia/settings.toml"
+    local dst="$HOME/.local/state/noctalia/settings.toml"
+
+    if ! command -v noctalia >/dev/null 2>&1; then
+        echo "error: Noctalia is not installed." >&2
+        return 1
+    fi
+
+    local version
+    version="$(noctalia --version 2>/dev/null)" || {
+        echo "error: unable to determine Noctalia version." >&2
+        return 1
+    }
+
+    if ! [[ "$version" =~ ([0-9]+)\. ]]; then
+        echo "error: unable to parse Noctalia version: $version" >&2
+        return 1
+    fi
+
+    if (( BASH_REMATCH[1] < 5 )); then
+        echo "error: Noctalia v5+ required; found $version." >&2
+        return 1
+    fi
+
+    if [[ ! -f "$src" ]]; then
+        echo "error: dotfiles settings file not found:" >&2
+        echo "       $src" >&2
+        return 1
+    fi
+
+    mkdir -p "$(dirname "$dst")" || return 1
+
+    if [[ -L "$dst" ]]; then
+        if [[ "$(readlink -f "$dst")" == "$(readlink -f "$src")" ]]; then
+            echo "Noctalia settings already linked."
+            return 0
+        fi
+
+        echo "error: existing symlink points somewhere else:" >&2
+        echo "       $dst -> $(readlink "$dst")" >&2
+        return 1
+    fi
+
+    if [[ -e "$dst" ]]; then
+        echo "error: Noctalia settings already exists and is not a symlink:" >&2
+        echo "       $dst" >&2
+        return 1
+    fi
+
+    ln -s "$src" "$dst" || return 1
+
+    echo "Linked Noctalia settings:"
+    echo "  $src -> $dst"
+}
 
 install_font() {
     mkdir $HOME/.local/share/fonts/
@@ -155,6 +210,8 @@ enable_services
 install_AUR_packages
 
 symlink_create
+
+noctalia_v5_setup
 
 install_font
 
