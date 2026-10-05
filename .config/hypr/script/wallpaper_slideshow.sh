@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Directory containing wallpapers
 WALLPAPER_DIR="$HOME/wallpapers"
@@ -11,24 +11,28 @@ COLORS_FILE="$HOME/.config/hypr/hyprcolors.lua"
 # Check if hyprpaper is running, if not start it
 if ! pgrep -x "hyprpaper" > /dev/null; then
     hyprpaper &
+    echo "Started Hyprpaper..."
     sleep 1
 fi
 
 # 1. Get all wallpapers and shuffle them ONCE at the start
 # Get all wallpapers and shuffle them ONCE at the start
-mapfile -t WALLPAPER_LIST < <(
-    find "$WALLPAPER_DIR" -type f \
+WALLPAPER_LIST=$(find "$WALLPAPER_DIR" -type f \
         \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" -o -name "*.webp" \) |
-    shuf
-)
+        shuf)
+
+
+WALLPAPER_COUNT=$(find "$WALLPAPER_DIR" -type f \
+    \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" -o -name "*.webp" \) |
+    wc -l)
 
 # Check if any wallpapers were found
-if [ ${#WALLPAPER_LIST[@]} -eq 0 ]; then
+if [ "$WALLPAPER_COUNT" -eq 0 ]; then
     echo "No wallpapers found in $WALLPAPER_DIR"
     exit 1
 fi
 
-echo "Found ${#WALLPAPER_LIST[@]} wallpapers"
+echo "Found $WALLPAPER_COUNT wallpapers"
 
 update_colors() {
     local WALL="$1"
@@ -58,7 +62,7 @@ while true; do
           # Preload the selected wallpaper
           # hyprctl hyprpaper preload "$WALLPAPER"
           # Set the wallpaper for all monitors
-           
+          echo "Setting $WALLPAPER" 
           hyprctl hyprpaper wallpaper ",$WALLPAPER"
 
           update_colors "$WALLPAPER"

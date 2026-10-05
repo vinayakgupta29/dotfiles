@@ -1,0 +1,439 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+
+# ============================================================
+# Configuration
+# ============================================================
+
+DEFAULT_ROOT="main.tex"
+BUILD_DIR=".latex-build"
+
+
+# ============================================================
+# Error
+# ============================================================
+
+error() {
+    echo "Error: $*" >&2
+    exit 1
+}
+
+
+# ============================================================
+# Help
+# ============================================================
+
+show_help() {
+    cat <<EOF
+Usage:
+    build [SOURCE] [OPTIONS]
+
+Commands:
+    .                   Build using the default source.
+    clean               Clean build artifacts.
+
+Source:
+    FILE.tex            Build the specified LaTeX file.
+
+Options:
+    -o, --output FILE   Set the output PDF name.
+    -h, --help          Show this help message.
+
+Examples:
+    build .
+    build clean
+    build main_3.tex
+    build main_3.tex -o title.pdf
+    build . -o title.pdf
+
+Default behavior:
+    • main.tex is preferred.
+    • If main.tex is missing, a .tex file containing
+      \\\\documentclass is searched for in the current directory.
+    • The search is not recursive.
+    • Without -o, the PDF is named after the project directory.
+    • Build artifacts are removed after a successful build.
+    • Build artifacts are preserved if compilation fails.
+EOF
+}
+
+
+# ============================================================
+# Dependency check
+# ============================================================
+
+check_dependencies() {
+
+    local missing=()
+
+    command -v latexmk >/dev/null 2>&1 || missing+=("latexmk")
+    command -v pdflatex >/dev/null 2>&1 || missing+=("pdflatex")
+
+    if [[ ${#missing[@]} -gt 0 ]]; then
+        error "missing required command(s): ${missing[*]}"
+    fi
+}
+
+
+# ============================================================
+# Clean build artifacts
+# ============================================================
+
+clean_build_artifacts() {
+
+    if [[ -d "$BUILD_DIR" ]]; then
+        rm -rf -- "$BUILD_DIR"
+        echo "Cleaned $BUILD_DIR"
+    else
+        echo "Nothing to clean"
+    fi
+}
+
+
+# ============================================================
+# Find default source
+# ============================================================
+
+find_default_root() {
+
+    # Prefer main.tex.
+    if [[ -f "$DEFAULT_ROOT" ]]; then
+        printf '%s\n' "$DEFAULT_ROOT"
+        return 0
+    fi
+
+
+    # Search only the current directory.
+    local file
+
+    while IFS= read -r -d '' file; do
+        if grep -q '\\documentclass' "$file" 2>/dev/null; then
+            printf '%s\n' "$file"
+            return 0
+        fi
+    done < <(
+        find . \
+            -maxdepth 1 \
+            -type f \
+            -name '*.tex' \
+            -print0 |
+        sort -z
+    )
+
+
+    error "no LaTeX source found (main.tex or a .tex file with \\documentclass)"
+}
+
+
+# ============================================================
+# Resolve source
+# ============================================================
+
+resolve_source() {
+
+    local source="$1"
+
+    # "." means use default source selection.
+    if [[ "$source" == "." ]]; then
+        find_default_root
+        return 0
+    fi
+
+
+    # Explicit source.
+    if [[ ! -f "$source" ]]; then
+        error "source file not found: $source"
+    fi
+
+
+    if [[ "${source##*.}" != "tex" ]]; then
+        error "source is not a .tex file: $source"
+    fi
+
+
+    if [[ ! -r "$source" ]]; then
+        error "source file is not readable: $source"
+    fi
+
+
+    printf '%s\n' "$source"
+}
+
+
+# ============================================================
+# Resolve output
+# ============================================================
+
+resolve_output() {
+
+    local output="$1"
+
+    if [[ -z "$output" ]]; then
+        error "output filename is empty"
+    fi
+
+
+    # Add .pdf if omitted.
+    if [[ "$output" != *.pdf ]]; then
+        output="${output}.pdf"
+    fi
+
+
+    if [[ -d "$output" ]]; then
+        error "output path is a directory: $output"
+    fi
+
+
+    printf '%s\n' "$output"
+}
+
+
+# ============================================================
+# Build
+# ============================================================
+
+build_latex() {
+
+    local source="$1"
+
+    mkdir -p "$BUILD_DIR"
+
+    latexmk \
+        -pdf \
+        -synctex=1 \
+        -interaction=nonstopmode \
+        -file-line-error \
+        -outdir="$BUILD_DIR" \
+        "$source"
+
+    local status=$?
+
+    if [[ $status -ne 0 ]]; then
+        echo
+        echo "Error: LaTeX build failed"
+        echo "Build artifacts: $BUILD_DIR"
+        return "$status"
+    fi
+
+    return 0
+}
+
+
+# ============================================================
+# Copy PDF
+# ============================================================
+
+copy_pdf() {
+
+    local source="$1"
+    local output="$2"
+
+    local source_name
+    local generated_pdf
+
+    source_name="$(basename "${source%.tex}")"
+    generated_pdf="${BUILD_DIR}/${source_name}.pdf"
+
+
+    if [[ ! -f "$generated_pdf" ]]; then
+        error "PDF was not generated: $generated_pdf"
+    fi
+
+
+    # Create parent directory if needed.
+    local output_dir
+    output_dir="$(dirname "$output")"
+
+    if [[ "$output_dir" != "." ]]; then
+        mkdir -p -- "$output_dir" || \
+            error "could not create output directory: $output_dir"
+    fi
+
+
+    cp -- "$generated_pdf" "$output" || \
+        error "could not copy PDF to: $output"
+}
+
+
+# ============================================================
+# Argument parsing
+# ============================================================
+
+parse_arguments() {
+
+    SOURCE="."
+    OUTPUT=""
+
+
+    if [[ $# -eq 0 ]]; then
+        return 0
+    fi
+
+
+    # --------------------------------------------------------
+    # First argument
+    # --------------------------------------------------------
+
+    case "$1" in
+
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+
+
+        clean)
+
+            if [[ $# -ne 1 ]]; then
+                error "'clean' does not accept additional arguments"
+            fi
+
+            clean_build_artifacts
+            exit 0
+            ;;
+
+
+        .)
+            SOURCE="."
+            shift
+            ;;
+
+
+        -*)
+            error "unknown option: $1"
+            ;;
+
+
+        *)
+            SOURCE="$1"
+            shift
+            ;;
+
+    esac
+
+
+    # --------------------------------------------------------
+    # Remaining arguments
+    # --------------------------------------------------------
+
+    while [[ $# -gt 0 ]]; do
+
+        case "$1" in
+
+            -o|--output)
+
+                if [[ $# -lt 2 ]]; then
+                    error "missing output filename after $1"
+                fi
+
+                OUTPUT="$2"
+                shift 2
+                ;;
+
+
+            -h|--help)
+                show_help
+                exit 0
+                ;;
+
+
+            -*)
+                error "unknown option: $1"
+                ;;
+
+
+            *)
+                error "unexpected argument: $1"
+                ;;
+
+        esac
+
+    done
+}
+
+
+# ============================================================
+# Main
+# ============================================================
+
+main() {
+
+    parse_arguments "$@"
+
+
+    # --------------------------------------------------------
+    # Resolve source.
+    # --------------------------------------------------------
+
+    local source
+    source="$(resolve_source "$SOURCE")"
+
+
+    # --------------------------------------------------------
+    # Default output:
+    #
+    # basename "$(pwd)"
+    #
+    # This is intentionally independent of the .tex filename.
+    #
+    # /home/user/MyProject
+    #       -> MyProject.pdf
+    # --------------------------------------------------------
+
+    local output
+
+    if [[ -n "$OUTPUT" ]]; then
+        output="$(resolve_output "$OUTPUT")"
+    else
+        output="$(basename "$(pwd)").pdf"
+    fi
+
+
+    # --------------------------------------------------------
+    # Build information.
+    # --------------------------------------------------------
+
+    echo "Source: $source"
+    echo "Output: $output"
+    echo
+
+
+    # --------------------------------------------------------
+    # Dependencies.
+    # --------------------------------------------------------
+
+    check_dependencies
+
+
+    # --------------------------------------------------------
+    # Build.
+    #
+    # On failure, keep .latex-build for debugging.
+    # --------------------------------------------------------
+
+    if ! build_latex "$source"; then
+        exit 1
+    fi
+
+
+    # --------------------------------------------------------
+    # Copy PDF.
+    # --------------------------------------------------------
+
+    copy_pdf "$source" "$output"
+
+
+    # --------------------------------------------------------
+    # Successful build -> clean artifacts.
+    # --------------------------------------------------------
+
+
+
+    echo
+    echo "Built: $output"
+}
+
+
+main "$@"

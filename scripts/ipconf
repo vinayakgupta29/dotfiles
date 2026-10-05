@@ -1,8 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Clear the terminal screen
-clear
-
+if [[ -t 1 ]]; then
+    clear
+fi
 
 # Define the default value
 DEFAULT_VALUE="wlan0"

@@ -1,0 +1,232 @@
+config_version = 14
+
+[audio]
+enable_sounds = true
+
+[bar]
+order = [ "default" ]
+
+    [bar.default]
+    background_opacity = 0.29999999329447746
+    center = [ "workspaces" ]
+    end = [
+        "HYPR_PICKER",
+        "notifications",
+        "clipboard",
+        "network",
+        "bluetooth",
+        "volume",
+        "brightness",
+        "battery",
+        "clock",
+        "control-center",
+        "session"
+    ]
+    font_family = "GeistMono Nerd Font"
+    margin_ends = 5
+    start = [ "launcher", "media", "cpu", "ram", "temp", "inputmethod", "notes" ]
+
+[calendar]
+enabled = true
+
+[[control_center.shortcuts]]
+type = "wifi"
+
+[[control_center.shortcuts]]
+type = "bluetooth"
+
+[[control_center.shortcuts]]
+type = "nightlight"
+
+[[control_center.shortcuts]]
+type = "notification"
+
+[[control_center.shortcuts]]
+type = "power_profile"
+
+[[control_center.shortcuts]]
+type = "session"
+
+[desktop_widgets]
+enabled = false
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
+[dock]
+active_monitor_only = true
+auto_hide = true
+background_opacity = 0.5
+enabled = true
+reserve_space = false
+show_dots = true
+
+[hot_corners]
+delay_ms = 50
+enabled = true
+
+    [hot_corners.bottom_left]
+    action = "launcher"
+
+[lockscreen]
+enabled = false
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@eDP-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 683.0
+    cy = 586.0
+    output = "eDP-1"
+    placement_height = 768.0
+    placement_width = 1366.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+[plugins]
+enabled = [ "vinayakgupta29/inputmethod", "noctalia/bongocat", "noctalia/notes" ]
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/noctalia-dev/official-plugins"
+    name = "official"
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/noctalia-dev/community-plugins"
+    name = "community"
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/vinayakgupta29/noctalia_plugins"
+    name = "vector"
+
+[shell]
+avatar_path = "/home/zoro/avatar.png"
+panel_anchor_bar = "default"
+password_style = "random"
+
+    [shell.launcher]
+    app_grid = true
+    pinned = [ "localsend", "proton.vpn.app.gtk", "org.kde.dolphin", "discord", "anti-gravity-ide" ]
+
+        [shell.launcher.providers.emoji]
+        global = true
+
+    [shell.panel]
+    launcher_placement = "attached"
+    transparency_mode = "soft"
+
+[theme]
+community_palette = "Rosey AMOLED"
+custom_palette = "Vector"
+source = "custom"
+
+    [theme.templates]
+    builtin_ids = [ "btop" ]
+    community_ids = [ "obsidian" ]
+
+[wallpaper]
+directory = "/home/zoro/wallpapers"
+fill_mode = "stretch"
+transition_duration = 1200
+
+    [wallpaper.automation]
+    enabled = true
+    interval_seconds = 180
+
+    [wallpaper.default]
+    path = "/home/zoro/wallpapers/1180148.png"
+
+    [wallpaper.last]
+    path = "/home/zoro/wallpapers/1180148.png"
+
+    [wallpaper.monitors.eDP-1]
+    path = "/home/zoro/wallpapers/1180148.png"
+
+[widget.HYPR_PICKER]
+glyph = "color-picker"
+tooltip = "Color Picker"
+type = "custom_button"
+
+    [widget.HYPR_PICKER.actions]
+    left = "exec sh -c '/home/zoro/dotfiles/.config/waybar/scripts/Colorpicker.sh'"
+
+[widget.battery]
+device = "/org/freedesktop/UPower/devices/battery_BAT1"
+display_mode = "graphic"
+font_scale = 0.75
+
+[widget.brightness]
+font_scale = 0.75
+
+[widget.clock]
+format = "{:%I:%M %p}"
+tooltip_format = "{:%A, %d %b %Y}"
+
+[widget.cpu]
+show_value = false
+
+[widget.inputmethod]
+font_family = "Diphylleia"
+scale = 1.5
+type = "vinayakgupta29/inputmethod:inputmethod"
+
+[widget.media]
+hide_when_no_media = true
+show_progress = true
+title_scroll = "always"
+
+[widget.network]
+show_vpn_label = true
+
+[widget.notes]
+type = "noctalia/notes:notes"
+
+[widget.ram]
+show_value = false
+
+[widget.temp]
+show_value = false
+
+[widget.volume]
+font_scale = 0.75
+
+[widget.workspaces]
+active_pill_size = 2.0
+empty_color = "tertiary"
+font_weight = 600
+labels_only_when_occupied = true
+occupied_color = "on_surface"
+style = "minimal"

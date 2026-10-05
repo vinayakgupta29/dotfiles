@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Check if VLC is running and in fullscreen mode
 if pgrep vlc > /dev/null; then

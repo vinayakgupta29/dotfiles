@@ -1,4 +1,4 @@
-##!/bin/bash
+##!/usr/bin/env bash
 
 # List engines in desired cycle order
 engines=(

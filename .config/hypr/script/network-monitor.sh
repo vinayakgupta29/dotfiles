@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 SOUND="/usr/share/sounds/freedesktop/stereo/network-connectivity-established.oga"
 CONNECTED="no"

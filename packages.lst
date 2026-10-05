@@ -5,6 +5,7 @@ avahi
 bat
 base-devel
 bc
+biber
 blueman
 bluez
 bluez-utils
@@ -88,6 +89,8 @@ rustup
 sddm
 sfml
 spectacle
+texlive-meta
+texlive-binextra
 ttf-font-awesome
 ttf-liberation
 ttf-firacode-nerd

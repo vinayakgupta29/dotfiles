@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Get current Fcitx5 engine
 engine=$(fcitx5-remote -n)

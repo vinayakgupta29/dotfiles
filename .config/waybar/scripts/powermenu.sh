@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Current Theme
 dir="$HOME/.config/rofi"
