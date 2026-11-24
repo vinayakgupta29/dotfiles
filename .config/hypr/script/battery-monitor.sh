@@ -2,32 +2,42 @@
 
 warning_level=30
 critical_level=15
-CHECK_INTERVAL=1
+CHECK_INTERVAL=30 # 30 sec
 
 sent_warning=0
 sent_critical=0
 
-BATTERY=$(ls /sys/class/power_supply | grep -m1 BAT)
+BATTERY_PATH=(/sys/class/power_supply/BAT*)
 
-while true; do
-  capacity=$(< /sys/class/power_supply/$BATTERY/capacity)
-  STATUS=$(< /sys/class/power_supply/$BATTERY/status)
+if [[ -e "${BATTERY_PATH[0]}" ]]; then
+	BATTERY="${BATTERY_PATH[0]}"
 
-  if [[ "$STATUS" == "Discharging" ]]; then
+	while true; do
+		capacity="$(<"$BATTERY/capacity")"
+		STATUS="$(<"$BATTERY/status")"
 
-    if (( capacity <= critical_level )) && (( sent_critical == 0 )); then
-      notify-send -u critical "Battery Critical" "Connect your charger! ($capacity%)"
-      paplay /usr/share/sounds/freedesktop/stereo/dialog-warning.oga
-      sent_critical=1
+		if [[ "$STATUS" == "Discharging" ]]; then
 
-    elif (( capacity <= warning_level )) && (( sent_warning == 0 )); then
-      notify-send -u normal "Battery Low" "Battery is low ($capacity%)."
-      paplay /usr/share/sounds/freedesktop/stereo/dialog-information.oga
-      sent_warning=1
-    fi
+			if ((capacity <= critical_level)) && ((sent_critical == 0)); then
+				notify-send -u critical "Battery Critical" "Connect your charger! ($capacity%)"
+				paplay /usr/share/sounds/freedesktop/stereo/dialog-warning.oga
+				sent_critical=1
 
-  fi
+			elif ((capacity <= warning_level)) && ((sent_warning == 0)); then
+				notify-send -u normal "Battery Low" "Battery is low ($capacity%)."
+				paplay /usr/share/sounds/freedesktop/stereo/dialog-information.oga
+				sent_warning=1
+			fi
+		else
+			sent_critical=0
+			sent_warning=0
 
-  sleep "$CHECK_INTERVAL"
-done
+		fi
 
+		sleep "$CHECK_INTERVAL"
+	done
+
+else
+	printf 'No battery detected.\n' >&2
+	exit 1
+fi

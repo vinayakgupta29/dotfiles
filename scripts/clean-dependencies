@@ -1,12 +1,14 @@
+#!/usr/bin/env bash
+
 # List orphaned packages
 pacman -Qdt
 
 # Remove orphaned packages if they exist
 orphans=$(pacman -Qdtq)
 if [ -n "$orphans" ]; then
-  sudo pacman -Rns $orphans
+	sudo pacman -Rns "$orphans"
 else
-  echo "No orphaned packages to remove."
+	echo "No orphaned packages to remove."
 fi
 
 # Clean the package cache

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-if pgrep -x "wofi" > /dev/null; then
-    pkill wofi
+if pgrep -x "wofi" >/dev/null; then
+	pkill wofi
 else
-    wofi --show drun --insensitive -I &
+	wofi --show drun --insensitive -I &
 fi

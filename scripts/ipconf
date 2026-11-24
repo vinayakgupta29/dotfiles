@@ -2,7 +2,7 @@
 
 # Clear the terminal screen
 if [[ -t 1 ]]; then
-    clear
+	clear
 fi
 
 # Define the default value
@@ -12,7 +12,7 @@ DEFAULT_VALUE="wlan0"
 option="${1:-$DEFAULT_VALUE}"
 
 # Fetch the public IPv4 address and store it in a variable
-ipv4=$(ip addr show | grep "$option" | awk '{print $2}' )
+ipv4="$(ip addr show | grep "$option" | awk '{print $2}')"
 
 # Print the IPv4 address followed by a new line
 echo "Your public IPv4 address on LOCAL WLAN is: $ipv4"

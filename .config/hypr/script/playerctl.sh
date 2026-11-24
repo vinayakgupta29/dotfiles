@@ -32,4 +32,4 @@ short_title="${title:0:25}"
 # Combine the pieces
 song_info="$short_title $source $artist"
 
-echo "$song_info" 
+echo "$song_info"

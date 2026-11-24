@@ -2,6 +2,8 @@ wallpapers/
 grub/theme
 login-man
 *.log
+*.html
 yay/
 .qodo
 .config/nvim/lazy-lock.json
+.vscode

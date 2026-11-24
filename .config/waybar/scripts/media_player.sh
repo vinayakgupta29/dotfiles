@@ -9,7 +9,7 @@ workspace=$(hyprctl clients -j | jq -r --arg pid "$pid" '
 
 # If we found a workspace, switch to it
 if [ -n "$workspace" ]; then
-  hyprctl dispatch workspace "$workspace"
+	hyprctl dispatch workspace "$workspace"
 else
-  notify-send "Player Window" "Could not find player window."
+	notify-send "Player Window" "Could not find player window."
 fi

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Start Hyprland if not running and if this is a TTY login shell
 #if [[ -z "$WAYLAND_DISPLAY" ]] && [[ "$(tty)" == "/dev/tty1" ]] && ! pgrep -x Hyprland > /dev/null; then
- # Hyprland
+# Hyprland
 #fi
 
 # Add custom scripts directory to PATH
@@ -48,42 +48,34 @@ export QT6CT_PLATFORMTHEME=qt6ct
 # Define path to Google Chrome executable
 export CHROME_EXECUTABLE="/opt/google/chrome/chrome"
 
-# Source GHCup environment if it exists
-[ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" # ghcup-env
-
-force_color_prompt=yes
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
 mountntfs() {
-    if [ -z "$1" ]; then
-        echo "Usage: mountntfs <device> [mountpoint]"
-        return 1
-    fi
+	if [ -z "$1" ]; then
+		echo "Usage: mountntfs <device> [mountpoint]"
+		return 1
+	fi
 
-    local mountpoint="${2:-/mnt/ntfs_partition}"
+	local mountpoint="${2:-/mnt/ntfs_partition}"
 
-    sudo mount -t ntfs-3g "$1" "$mountpoint"
+	sudo mount -t ntfs-3g "$1" "$mountpoint"
 }
 
 PS1='
 \[\e[1;32m\] \u @ \h \[\e[1;34m\]\w\[\e[0m\]
 \[\e[1;32m\] \[\e[38;5;178m\]__> \[\e[0m\]'
 
-
-
 # fnm
 FNM_PATH="/home/zoro/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  eval "`fnm env`"
+	export PATH="$FNM_PATH:$PATH"
+	eval "$(fnm env)"
 fi
 
 export ANDROID_HOME="$HOME/Android/Sdk"
 export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
 export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
-
-
 
 # Added by Antigravity CLI installer
 export PATH="/home/zoro/.local/bin:$PATH"

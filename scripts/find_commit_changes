@@ -1,6 +1,14 @@
+
 #!/usr/bin/env bash
 
+# find_commit_changes script searches a directory recursively 
+# for Git repositories and prints the paths of repositories that 
+# have uncommitted changes or saved stashes.
+
+set -Eeuo pipefail
+
 root_dir="${1:-.}"
+root_dir="$(realpath "$root_dir")"
 
 find "$root_dir" -type d -name .git -print0 |
 while IFS= read -r -d '' gitdir; do
@@ -10,6 +18,6 @@ while IFS= read -r -d '' gitdir; do
     stashes=$(git -C "$repo_dir" stash list 2>/dev/null)
 
     if [[ -n "$status" || -n "$stashes" ]]; then
-        echo "$repo_dir"
+        printf '%s\n' "$repo_dir"
     fi
 done

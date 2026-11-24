@@ -4,8 +4,8 @@
 set -e
 
 # === CONFIGURATION ===
-REPO_URL="https://github.com/vinayakgupta29/sddm-slayer.git"  # Example repo
-THEME_NAME="greet_slayer"  # Folder name of the theme inside the repo
+REPO_URL="https://github.com/vinayakgupta29/sddm-slayer.git" # Example repo
+THEME_NAME="greet_slayer"                                    # Folder name of the theme inside the repo
 CLONE_DIR="/tmp/sddm-theme"
 DEST_DIR="/usr/share/sddm/themes/$THEME_NAME"
 SDDM_CONF="/etc/sddm.conf"
@@ -25,15 +25,14 @@ echo "Configuring SDDM to use the new theme..."
 
 # Make sure [Theme] section exists
 if ! grep -q "^\[Theme\]" "$SDDM_CONF"; then
-    echo -e "\n[Theme]" | sudo tee -a "$SDDM_CONF" > /dev/null
+	echo -e "\n[Theme]" | sudo tee -a "$SDDM_CONF" >/dev/null
 fi
 
 # Set current theme
 if grep -q "^Current=" "$SDDM_CONF"; then
-    sudo sed -i "s|^Current=.*|Current=$THEME_NAME|" "$SDDM_CONF"
+	sudo sed -i "s|^Current=.*|Current=$THEME_NAME|" "$SDDM_CONF"
 else
-    sudo sed -i "/^\[Theme\]/a Current=$THEME_NAME" "$SDDM_CONF"
+	sudo sed -i "/^\[Theme\]/a Current=$THEME_NAME" "$SDDM_CONF"
 fi
-
 
 echo "✅ SDDM theme '$THEME_NAME' installed and activated!"

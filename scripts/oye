@@ -13,59 +13,59 @@ SOURCE="$DEFAULT_SOURCE"
 # Check for the selected option
 
 case "$1" in
-  --help)
-    echo "usage: $0 {--cus|kw|kw2|kw3|ag|ag2|ag3|ag4|sa|lw|lu|he|he2|he3|boy|catBoy}"
-    exit 0
-;;
-  --cus)
-    SOURCE="$dir/ascii-art.txt"
-;;
-  kw)
-    SOURCE="$dir/ascii-kw.txt"
-;;
-  kw2)
-    SOURCE="$dir/ascii-kw2.txt"
-;;
-  kw3)
-    SOURCE="$dir/ascii-kw3.txt"
-;;
-  ag)
-    SOURCE="$dir/ascii-ahegao.txt"
-;;
-  ag2)
-    SOURCE="$dir/ascii-ahegao2.txt"
-;;
-  ag3)
-    SOURCE="$dir/ascii-ahegao3.txt"
-;;
-  ag4)
-    SOURCE="$dir/ascii-ahegao4.txt"
-;;
-  sa)
-    SOURCE="$dir/ascii-saitama.txt"
-;;
-  lw)
-    SOURCE="$dir/ascii-luffy-wanted.txt"
-;;
-  lu)
-    SOURCE="$dir/ascii-luffy.txt"
-;;
-  he)
-    SOURCE="$dir/ascii-hen.txt"
-;;
-  he2)
-    SOURCE="$dir/ascii-hen2.txt"
-;;
-  he3)
-    SOURCE="$dir/ascii-hen3.txt"
-;;
-  boy)
-    SOURCE="$dir/ascii-boykisser.txt"
-    ;;
-  catBoy)
-    SOURCE="$dir/ascii-catboy.txt"
+--help)
+	echo "usage: $0 {--cus|kw|kw2|kw3|ag|ag2|ag3|ag4|sa|lw|lu|he|he2|he3|boy|catBoy}"
+	exit 0
+	;;
+--cus)
+	SOURCE="$dir/ascii-art.txt"
+	;;
+kw)
+	SOURCE="$dir/ascii-kw.txt"
+	;;
+kw2)
+	SOURCE="$dir/ascii-kw2.txt"
+	;;
+kw3)
+	SOURCE="$dir/ascii-kw3.txt"
+	;;
+ag)
+	SOURCE="$dir/ascii-ahegao.txt"
+	;;
+ag2)
+	SOURCE="$dir/ascii-ahegao2.txt"
+	;;
+ag3)
+	SOURCE="$dir/ascii-ahegao3.txt"
+	;;
+ag4)
+	SOURCE="$dir/ascii-ahegao4.txt"
+	;;
+sa)
+	SOURCE="$dir/ascii-saitama.txt"
+	;;
+lw)
+	SOURCE="$dir/ascii-luffy-wanted.txt"
+	;;
+lu)
+	SOURCE="$dir/ascii-luffy.txt"
+	;;
+he)
+	SOURCE="$dir/ascii-hen.txt"
+	;;
+he2)
+	SOURCE="$dir/ascii-hen2.txt"
+	;;
+he3)
+	SOURCE="$dir/ascii-hen3.txt"
+	;;
+boy)
+	SOURCE="$dir/ascii-boykisser.txt"
+	;;
+catBoy)
+	SOURCE="$dir/ascii-catboy.txt"
+	;;
 esac
 
 clear
 fastfetch --logo "$SOURCE" --logo-position left
-
