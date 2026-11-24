@@ -75,6 +75,10 @@ binds = {
 
 	{ "SHIFT", "Print", hl.dsp.exec_cmd("hyprshot -m region -o $HOME/Pictures/Screenshots") },
 	{ "ALT", "Print", hl.dsp.exec_cmd("hyprshot -m output -o $HOME/Pictures/Screenshots") },
+
+	-- Resize tiled windows (Dwindle)
+	{ mainMod .. " + SHIFT", "H", hl.dsp.layout("splitratio -0.05") },
+	{ mainMod .. " + SHIFT", "L", hl.dsp.layout("splitratio 0.05") },
 }
 
 for _, bind in ipairs(binds) do

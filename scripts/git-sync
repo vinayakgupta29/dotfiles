@@ -1,0 +1,53 @@
+
+#!/usr/bin/env bash
+
+# Synchronize the current branch with origin using rebase.
+
+remote="origin"
+
+# Ensure we're inside a Git repository.
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "Error: Not inside a Git repository." >&2
+    exit 1
+fi
+
+# Identify the current branch.
+branch=$(git branch --show-current)
+
+if [[ -z "$branch" ]]; then
+    echo "Error: HEAD is detached. Checkout a branch first." >&2
+    exit 1
+fi
+
+# Ensure there are no uncommitted changes.
+if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo "Error: You have uncommitted changes. Commit or stash them first." >&2
+    exit 1
+fi
+
+# Ensure the remote exists.
+if ! git remote get-url "$remote" >/dev/null 2>&1; then
+    echo "Error: Remote '$remote' does not exist." >&2
+    exit 1
+fi
+
+echo "[1/3] Fetching latest changes from $remote..."
+if ! git fetch "$remote"; then
+    echo "Error: Fetch failed." >&2
+    exit 1
+fi
+
+echo "[2/3] Rebasing $branch onto $remote/$branch..."
+if ! git rebase "$remote/$branch"; then
+    echo "Error: Rebase failed. Resolve conflicts and run 'git rebase --continue'."
+    echo "To cancel the rebase, run 'git rebase --abort'."
+    exit 1
+fi
+
+echo "[3/3] Pushing updated history..."
+if ! git push "$remote" "$branch"; then
+    echo "Error: Push failed." >&2
+    exit 1
+fi
+
+echo "Successfully synchronized $branch with $remote."

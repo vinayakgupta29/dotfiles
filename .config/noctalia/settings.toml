@@ -80,12 +80,68 @@ enabled = false
 [lockscreen_widgets]
 enabled = false
 schema_version = 2
-widget_order = [ "lockscreen-login-box@eDP-1" ]
+widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-login-box@WAYLAND-1", "lockscreen-login-box@FALLBACK" ]
 
     [lockscreen_widgets.grid]
     cell_size = 16
     major_interval = 4
     visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@FALLBACK"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 898.0
+    output = "FALLBACK"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@FALLBACK".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_password_reveal = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@WAYLAND-1"]
+    box_height = 196.0
+    box_width = 720.0
+    cx = 337.50003051757812
+    cy = 177.0
+    output = "WAYLAND-1"
+    placement_height = 359.0
+    placement_width = 675.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@WAYLAND-1".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_password_reveal = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
     box_height = 196.0
@@ -110,6 +166,7 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
         show_keyboard_layout = true
         show_login_button = true
         show_media = true
+        show_password_reveal = true
         show_session_buttons = true
         show_unlock_hint = true
         show_weather = true
@@ -167,13 +224,16 @@ transition_duration = 1200
     interval_seconds = 180
 
     [wallpaper.default]
-    path = "/home/zoro/wallpapers/1115171.jpg"
+    path = "/home/zoro/wallpapers/prinz ugene.jpg"
 
     [wallpaper.last]
-    path = "/home/zoro/wallpapers/1115171.jpg"
+    path = "/home/zoro/wallpapers/prinz ugene.jpg"
+
+    [wallpaper.monitors.WAYLAND-1]
+    path = "/home/zoro/wallpapers/wallpaperflare.com_wallpaper.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/zoro/wallpapers/1115171.jpg"
+    path = "/home/zoro/wallpapers/prinz ugene.jpg"
 
 [widget.HYPR_PICKER]
 glyph = "color-picker"
